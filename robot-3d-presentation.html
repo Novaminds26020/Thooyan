@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIH26115 — 3D Autonomous Medical-Waste Robot Demonstration</title>
+  <meta name="description" content="Cinematic 3D engineering animation demonstration of the Smart Mobile Medical-Waste Collection and Segregation Robot (SIH26115).">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Three.js & Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --panel-bg: rgba(13, 17, 26, 0.85);
+      --panel-border: rgba(255, 255, 255, 0.12);
+      --primary: #00d2ff;
+      --primary-glow: rgba(0, 210, 255, 0.35);
+      --accent: #3a7bd5;
+      --yellow-cat: #f59e0b;
+      --red-cat: #ef4444;
+      --white-cat: #f8fafc;
+      --blue-cat: #3b82f6;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-main);
+    }
+
+    #webgl-container {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* 16:9 Presentation Frame Indicator */
+    .viewport-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+    }
+
+    /* Top Header Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      pointer-events: auto;
+    }
+
+    .project-badge-card {
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 14px 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sih-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+
+    .sih-tag .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+
+    .project-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Top Right Controls & Video Export */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-action {
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border);
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-action:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .btn-record {
+      background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+      border: 1px solid #f87171;
+      color: white;
+    }
+
+    .btn-record:hover {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+    }
+
+    .btn-record.recording {
+      background: #111827;
+      border-color: #ef4444;
+      animation: recordGlow 1s infinite alternate;
+    }
+
+    @keyframes recordGlow {
+      from { box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+      to { box-shadow: 0 0 25px rgba(239, 68, 68, 0.9); }
+    }
+
+    /* Cinematic Center Phase Overlay */
+    .phase-hud {
+      position: absolute;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .phase-pill {
+      background: rgba(0, 210, 255, 0.15);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    .phase-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      letter-spacing: -0.5px;
+      text-align: center;
+    }
+
+    .phase-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      max-width: 600px;
+      text-align: center;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.8);
+    }
+
+    /* Live Telemetry Card (Bottom Left) */
+    .telemetry-card {
+      position: absolute;
+      bottom: 120px;
+      left: 24px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 16px;
+      width: 290px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      pointer-events: auto;
+      transition: all 0.3s ease;
+    }
+
+    .telemetry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .telemetry-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .telemetry-label {
+      color: var(--text-muted);
+    }
+
+    .telemetry-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .battery-bar-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .battery-bar-fill {
+      height: 100%;
+      width: 85%;
+      background: #10b981;
+      transition: width 0.5s ease, background-color 0.5s ease;
+    }
+
+    /* 4 Color Categories Legend */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .cat-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 6px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .cat-badge.active {
+      transform: scale(1.05);
+      border-color: currentColor;
+    }
+
+    .cat-badge.yellow { color: var(--yellow-cat); }
+    .cat-badge.red { color: var(--red-cat); }
+    .cat-badge.white { color: var(--white-cat); }
+    .cat-badge.blue { color: var(--blue-cat); }
+
+    .cat-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background-color: currentColor;
+    }
+
+    /* Mechanism Transparency / Cutaway Controls (Bottom Right) */
+    .view-modes-card {
+      position: absolute;
+      bottom: 120px;
+      right: 24px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 16px;
+      width: 280px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      pointer-events: auto;
+    }
+
+    .view-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cam-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .btn-cam {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #ffffff;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cam:hover, .btn-cam.active {
+      background: var(--primary);
+      color: #000000;
+      border-color: var(--primary);
+    }
+
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .cutaway-slider {
+      width: 100%;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Master Timeline Controller (Bottom Bar) */
+    .timeline-dock {
+      pointer-events: auto;
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 14px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      margin: 0 auto;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .timeline-progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .time-readout {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      min-width: 90px;
+    }
+
+    .timeline-track-container {
+      position: relative;
+      flex: 1;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .timeline-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #3a7bd5, var(--primary));
+      border-radius: 3px;
+      transition: width 0.05s linear;
+    }
+
+    .timeline-scrubber {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary);
+      pointer-events: none;
+    }
+
+    /* Scene markers along timeline */
+    .scene-markers {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .marker-tick {
+      width: 2px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      position: absolute;
+      top: 7px;
+    }
+
+    /* Timeline Playback Buttons */
+    .timeline-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .scene-quick-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+    }
+
+    .tab-scene {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-scene:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .tab-scene.active {
+      color: #ffffff;
+      background: rgba(0, 210, 255, 0.2);
+      border-color: var(--primary);
+    }
+
+    .playback-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-play-pause {
+      background: var(--primary);
+      color: #050811;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 15px var(--primary-glow);
+      transition: transform 0.2s ease;
+    }
+
+    .btn-play-pause:hover {
+      transform: scale(1.1);
+    }
+
+    .btn-speed {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--panel-border);
+      color: #ffffff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    /* Final Hero Slide Title Card (Shown at 18-20s) */
+    .hero-slide-title {
+      position: absolute;
+      top: 35%;
+      left: 8%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 5;
+    }
+
+    .hero-slide-title.visible {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .hero-slide-title .sih-banner {
+      display: inline-block;
+      background: linear-gradient(90deg, #ef4444, #f59e0b);
+      color: #ffffff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .hero-slide-title h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      color: #ffffff;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+      margin-bottom: 12px;
+    }
+
+    .hero-slide-title h1 span {
+      background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-slide-title .hero-meta-grid {
+      display: flex;
+      gap: 20px;
+      font-size: 14px;
+      color: #cbd5e1;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Video Download Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-card {
+      background: #0d111a;
+      border: 1px solid var(--primary);
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 210, 255, 0.25);
+    }
+
+    .modal-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .modal-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .export-progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .export-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ef4444, #00d2ff);
+      transition: width 0.1s linear;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .telemetry-card, .view-modes-card { display: none; }
+      .hero-slide-title h1 { font-size: 28px; }
+      .scene-quick-tabs { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ThreeJS WebGL Canvas -->
+  <div id="webgl-container"></div>
+
+  <!-- 16:9 Presentation Overlays -->
+  <div class="viewport-overlay">
+    
+    <!-- Top Header Bar -->
+    <div class="top-bar">
+      <div class="project-badge-card">
+        <div class="sih-tag">
+          <span class="pulse-dot"></span>
+          <span>SIH 2026 &bull; PROBLEM ID SIH26115</span>
+        </div>
+        <h2 class="project-title">Smart Mobile Medical-Waste Robot</h2>
+        <span class="project-subtitle">Automated Multi-Stream Biomedical Waste Collection & Segregation</span>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn-action btn-record" id="btnExportVideo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+          <span id="btnRecordText">Export HD Video (PPT Slide 1)</span>
+        </button>
+        <button class="btn-action" id="btnToggleFullscreen" title="Toggle Fullscreen">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Cinematic Sequence Phase HUD (Dynamic per second) -->
+    <div class="phase-hud" id="phaseHud">
+      <div class="phase-pill" id="phasePill">00–03s &bull; CORRIDOR NAVIGATION</div>
+      <div class="phase-headline" id="phaseHeadline">Autonomous Ward Transit</div>
+      <div class="phase-desc" id="phaseDesc">Differential-drive mobile base navigates hospital corridor towards designated ward waste station.</div>
+    </div>
+
+    <!-- Live Telemetry Card (Bottom Left) -->
+    <div class="telemetry-card" id="telemetryCard">
+      <div class="telemetry-header">
+        <span>ROBOT TELEMETRY</span>
+        <span id="telemetryStatus" style="color:#10b981;">ACTIVE</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">Navigation State:</span>
+        <span class="telemetry-val" id="telNav">Autonomous Transit</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">AI Vision Engine:</span>
+        <span class="telemetry-val" id="telVision">YOLO-BioMed v9</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">Active Arm Segregation:</span>
+        <span class="telemetry-val" id="telArm">Standby (4 Arms)</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">Battery Level:</span>
+        <span class="telemetry-val" id="telBattery">85%</span>
+      </div>
+      <div class="battery-bar-container">
+        <div class="battery-bar-fill" id="batteryBar"></div>
+      </div>
+
+      <!-- 4 Categories Legend -->
+      <div class="categories-grid">
+        <div class="cat-badge yellow" id="catYellow">
+          <span class="cat-indicator"></span>
+          <span>Yellow: Infectious</span>
+        </div>
+        <div class="cat-badge red" id="catRed">
+          <span class="cat-indicator"></span>
+          <span>Red: Plastics</span>
+        </div>
+        <div class="cat-badge white" id="catWhite">
+          <span class="cat-indicator"></span>
+          <span>White: Sharps</span>
+        </div>
+        <div class="cat-badge blue" id="catBlue">
+          <span class="cat-indicator"></span>
+          <span>Blue: Glass/Pharma</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- View & CAD Cutaway Controls (Bottom Right) -->
+    <div class="view-modes-card">
+      <div class="view-title">Camera Angles</div>
+      <div class="cam-buttons">
+        <button class="btn-cam active" data-cam="cinematic">Cinematic</button>
+        <button class="btn-cam" data-cam="isometric">CAD Isometric</button>
+        <button class="btn-cam" data-cam="top">Conveyor Flow</button>
+        <button class="btn-cam" data-cam="chutes">Chute Base</button>
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-header">
+          <span>CAD Shell Cutaway:</span>
+          <span id="cutawayVal">0%</span>
+        </div>
+        <input type="range" id="cutawaySlider" class="cutaway-slider" min="0" max="100" value="0">
+      </div>
+    </div>
+
+    <!-- Hero Slide 1 Title Overlay (Fades at 18-20s) -->
+    <div class="hero-slide-title" id="heroTitle">
+      <div class="sih-banner">SIH 2026 &bull; Problem ID SIH26115</div>
+      <h1>SMART MOBILE MEDICAL-WASTE<br><span>COLLECTION & SEGREGATION ROBOT</span></h1>
+      <div class="hero-meta-grid">
+        <div class="hero-meta-item">
+          <svg width="18" height="18" fill="none" stroke="#00d2ff" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Zero Human Exposure</span>
+        </div>
+        <div class="hero-meta-item">
+          <svg width="18" height="18" fill="none" stroke="#00d2ff" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <span>Automated 4-Stream Sort</span>
+        </div>
+        <div class="hero-meta-item">
+          <svg width="18" height="18" fill="none" stroke="#00d2ff" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span>99.4% AI Accuracy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Master Presentation Timeline Scrubber Dock -->
+    <div class="timeline-dock">
+      <div class="timeline-progress-wrap">
+        <div class="time-readout" id="timeReadout">00.0s / 20.0s</div>
+        <div class="timeline-track-container" id="timelineTrackContainer">
+          <div class="timeline-track">
+            <div class="timeline-fill" id="timelineFill"></div>
+          </div>
+          <div class="timeline-scrubber" id="timelineScrubber"></div>
+        </div>
+      </div>
+
+      <div class="timeline-controls">
+        <div class="playback-buttons">
+          <button class="btn-play-pause" id="btnPlayPause" title="Play / Pause (Space)">
+            <svg id="playIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pauseIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <button class="btn-speed" id="btnSpeed">1.0x</button>
+          <button class="btn-speed" id="btnRestart" title="Restart">↺</button>
+        </div>
+
+        <!-- 7 Step Sequence Jump Tabs -->
+        <div class="scene-quick-tabs">
+          <button class="tab-scene active" data-time="0">0-3s Corridor</button>
+          <button class="tab-scene" data-time="3">3-5s Intake</button>
+          <button class="tab-scene" data-time="5">5-8s Cutaway & AI</button>
+          <button class="tab-scene" data-time="8">8-12s 4-Arm Sort</button>
+          <button class="tab-scene" data-time="12">12-15s Sealed Chutes</button>
+          <button class="tab-scene" data-time="15">15-18s Return</button>
+          <button class="tab-scene" data-time="18">18-20s Hero Dock</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Video Export Modal -->
+  <div class="modal-overlay" id="exportModal">
+    <div class="modal-card">
+      <h3 id="modalTitle">Rendering HD Presentation Video</h3>
+      <p id="modalDesc">Capturing 60FPS high-definition 16:9 animation sequence for your SIH presentation slide...</p>
+      <div class="export-progress-bar">
+        <div class="export-progress-fill" id="exportFill"></div>
+      </div>
+      <button class="btn-action" id="btnCancelExport" style="margin: 0 auto;">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Main 3D Animation & CAD Engineering Logic -->
+  <script>
+    /* ==========================================================================
+       SIH 2026 MEDICAL WASTE ROBOT 3D DEMONSTRATION ENGINE
+       Complete 20-second Keyframed Mechanical Animation Sequence
+       ========================================================================== */
+
+    // Core 3D Variables
+    let scene, camera, renderer, controls;
+    let clock = new THREE.Clock();
+    let container = document.getElementById('webgl-container');
+
+    // Robot Components
+    let robotGroup = new THREE.Group();
+    let outerShellGroup = new THREE.Group();
+    let internalMechanismGroup = new THREE.Group();
+    let wheels = [];
+    let lidarPuck;
+    let frontDoor;
+    let conveyorBelt, conveyorTexture;
+    let aiScannerGantry, laserProjectorMesh, scanningRing;
+    let roboticArms = []; // 4 multi-axis robotic arms
+    let wasteItems = [];  // 4 colored items: Yellow, Red, White, Blue
+    let gravityChutes = [];
+    let compartments = [];
+    let shellMaterials = [];
+    let wireframeShells = [];
+    let hospitalCorridorGroup = new THREE.Group();
+    let chargingStation;
+    let wardBinStation;
+    let nurseRfidBadge;
+
+    // Animation & Playback State
+    const TOTAL_DURATION = 20.0; // Exact 20-second presentation video
+    let currentTime = 0.0;
+    let isPlaying = true;
+    let playbackSpeed = 1.0;
+    let activeCameraMode = 'cinematic'; // cinematic, isometric, top, chutes, free
+
+    // Camera Interpolation Targets
+    let cameraPos = new THREE.Vector3();
+    let cameraTarget = new THREE.Vector3();
+
+    // Video Recording Variables
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+
+    // Initialize 3D Engine
+    function init3D() {
+      // Scene
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x080b12);
+      scene.fog = new THREE.FogExp2(0x080b12, 0.035);
+
+      // Camera
+      camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(-6, 3, 7);
+
+      // Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, powerPreference: "high-performance" });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.25;
+      container.appendChild(renderer.domElement);
+
+      // Orbit Controls (for free inspection)
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2 - 0.02;
+      controls.minDistance = 2;
+      controls.maxDistance = 25;
+      controls.target.set(0, 1.2, 0);
+
+      // Lighting Setup (Studio CAD & Hospital Environment)
+      setupLighting();
+
+      // Build Hospital Environment
+      buildHospitalEnvironment();
+
+      // Build Engineering CAD Robot
+      buildMedicalRobot();
+
+      // Attach Robot to Scene
+      scene.add(robotGroup);
+
+      // Setup Event Listeners
+      setupUIEvents();
+      window.addEventListener('resize', onWindowResize, false);
+
+      // Start Animation Loop
+      animate();
+    }
+
+    /* --------------------------------------------------------------------------
+       LIGHTING SETUP
+       -------------------------------------------------------------------------- */
+    function setupLighting() {
+      const ambientLight = new THREE.AmbientLight(0xddeeff, 0.65);
+      scene.add(ambientLight);
+
+      // Key Studio Light
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
+      keyLight.position.set(8, 14, 10);
+      keyLight.castShadow = true;
+      keyLight.shadow.mapSize.width = 2048;
+      keyLight.shadow.mapSize.height = 2048;
+      keyLight.shadow.camera.near = 0.5;
+      keyLight.shadow.camera.far = 35;
+      keyLight.shadow.camera.left = -10;
+      keyLight.shadow.camera.right = 10;
+      keyLight.shadow.camera.top = 10;
+      keyLight.shadow.camera.bottom = -10;
+      keyLight.shadow.bias = -0.0005;
+      scene.add(keyLight);
+
+      // Medical Blue Fill Light
+      const fillLight = new THREE.DirectionalLight(0x00d2ff, 0.6);
+      fillLight.position.set(-10, 8, -6);
+      scene.add(fillLight);
+
+      // Crisp Rim / Back Light
+      const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      rimLight.position.set(0, 10, -12);
+      scene.add(rimLight);
+
+      // Warm Subtle Floor Bounce
+      const bounceLight = new THREE.PointLight(0x90cdf4, 0.5, 20);
+      bounceLight.position.set(0, 0.5, 0);
+      scene.add(bounceLight);
+    }
+
+    /* --------------------------------------------------------------------------
+       HOSPITAL ENVIRONMENT
+       -------------------------------------------------------------------------- */
+    function buildHospitalEnvironment() {
+      // Polished Hospital Corridor Floor with Subtle Grid
+      const floorGeo = new THREE.PlaneGeometry(60, 60);
+      const floorMat = new THREE.MeshStandardMaterial({
+        color: 0x111622,
+        roughness: 0.15,
+        metalness: 0.25,
+      });
+      const floor = new THREE.Mesh(floorGeo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.receiveShadow = true;
+      hospitalCorridorGroup.add(floor);
+
+      // Floor Grid Overlay
+      const gridHelper = new THREE.GridHelper(60, 60, 0x00d2ff, 0x1e293b);
+      gridHelper.position.y = 0.005;
+      hospitalCorridorGroup.add(gridHelper);
+
+      // Hospital Corridor Walls & Medical Architectural Panels
+      const wallMat = new THREE.MeshStandardMaterial({
+        color: 0x1a2233,
+        roughness: 0.6,
+        metalness: 0.1
+      });
+      const trimMat = new THREE.MeshStandardMaterial({
+        color: 0x00d2ff,
+        emissive: 0x004080,
+        emissiveIntensity: 0.4,
+        roughness: 0.3
+      });
+
+      // Left Corridor Wall
+      const wallGeo = new THREE.BoxGeometry(0.4, 6, 60);
+      const leftWall = new THREE.Mesh(wallGeo, wallMat);
+      leftWall.position.set(-6, 3, 0);
+      hospitalCorridorGroup.add(leftWall);
+
+      // Cyan LED Wall Guide Strip
+      const stripGeo = new THREE.BoxGeometry(0.42, 0.1, 60);
+      const ledStrip = new THREE.Mesh(stripGeo, trimMat);
+      ledStrip.position.set(-5.98, 1.2, 0);
+      hospitalCorridorGroup.add(ledStrip);
+
+      // Hospital Ward Biomedical Station (Intake Location at z = -4)
+      wardBinStation = new THREE.Group();
+      wardBinStation.position.set(-4.5, 0, -4);
+
+      // Ward Collection Unit Post
+      const postGeo = new THREE.CylinderGeometry(0.35, 0.35, 1.8, 24);
+      const postMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.4, metalness: 0.6 });
+      const post = new THREE.Mesh(postGeo, postMat);
+      post.position.y = 0.9;
+      post.castShadow = true;
+      wardBinStation.add(post);
+
+      // Ward Biohazard Bin Top
+      const binTopGeo = new THREE.BoxGeometry(0.8, 0.6, 0.8);
+      const binTopMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.3 });
+      const binTop = new THREE.Mesh(binTopGeo, binTopMat);
+      binTop.position.y = 1.6;
+      wardBinStation.add(binTop);
+
+      // RFID Badge Terminal
+      const terminalGeo = new THREE.BoxGeometry(0.3, 0.4, 0.1);
+      const termMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.2 });
+      const terminal = new THREE.Mesh(terminalGeo, termMat);
+      terminal.position.set(0.4, 1.4, 0);
+      wardBinStation.add(terminal);
+
+      // NFC Hologram Disc
+      const nfcDiscGeo = new THREE.RingGeometry(0.05, 0.12, 32);
+      const nfcDiscMat = new THREE.MeshBasicMaterial({ color: 0x00d2ff, side: THREE.DoubleSide });
+      nurseRfidBadge = new THREE.Mesh(nfcDiscGeo, nfcDiscMat);
+      nurseRfidBadge.position.set(0.56, 1.4, 0);
+      nurseRfidBadge.rotation.y = Math.PI / 2;
+      wardBinStation.add(nurseRfidBadge);
+
+      hospitalCorridorGroup.add(wardBinStation);
+
+      // Inductive Charging Docking Station (Dock Location at z = 5)
+      chargingStation = new THREE.Group();
+      chargingStation.position.set(0, 0, 5);
+
+      const dockBaseGeo = new THREE.BoxGeometry(2.4, 0.12, 2.2);
+      const dockBaseMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.4, metalness: 0.8 });
+      const dockBase = new THREE.Mesh(dockBaseGeo, dockBaseMat);
+      dockBase.position.y = 0.06;
+      dockBase.receiveShadow = true;
+      chargingStation.add(dockBase);
+
+      // Inductive Charging Coil Ring
+      const coilGeo = new THREE.TorusGeometry(0.6, 0.03, 16, 48);
+      const coilMat = new THREE.MeshStandardMaterial({
+        color: 0x00d2ff,
+        emissive: 0x00d2ff,
+        emissiveIntensity: 0.8
+      });
+      const coil = new THREE.Mesh(coilGeo, coilMat);
+      coil.rotation.x = Math.PI / 2;
+      coil.position.y = 0.13;
+      chargingStation.add(coil);
+
+      // Dock Backstop Tower
+      const towerGeo = new THREE.BoxGeometry(1.6, 1.4, 0.3);
+      const towerMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.3, metalness: 0.5 });
+      const tower = new THREE.Mesh(towerGeo, towerMat);
+      tower.position.set(0, 0.7, 1.0);
+      tower.castShadow = true;
+      chargingStation.add(tower);
+
+      // Dock LED Status bar
+      const dockLedGeo = new THREE.BoxGeometry(1.2, 0.06, 0.05);
+      const dockLedMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
+      const dockLed = new THREE.Mesh(dockLedGeo, dockLedMat);
+      dockLed.position.set(0, 1.2, 0.84);
+      chargingStation.add(dockLed);
+
+      hospitalCorridorGroup.add(chargingStation);
+      scene.add(hospitalCorridorGroup);
+    }
+
+    /* --------------------------------------------------------------------------
+       BUILD ROBOT (Precision Autodesk Fusion CAD Style)
+       -------------------------------------------------------------------------- */
+    function buildMedicalRobot() {
+      // 1. CHASSIS & MOBILE BASE
+      const chassisMat = new THREE.MeshStandardMaterial({
+        color: 0x181e29,
+        metalness: 0.8,
+        roughness: 0.35
+      });
+      const chassisGeo = new THREE.BoxGeometry(1.7, 0.28, 2.7);
+      const chassis = new THREE.Mesh(chassisGeo, chassisMat);
+      chassis.position.y = 0.32;
+      chassis.castShadow = true;
+      robotGroup.add(chassis);
+
+      // 4 Heavy-Duty Differential Drive Wheels
+      const wheelGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.16, 32);
+      const wheelMat = new THREE.MeshStandardMaterial({
+        color: 0x0d1117,
+        roughness: 0.8,
+        metalness: 0.2
+      });
+      const rimMat = new THREE.MeshStandardMaterial({
+        color: 0x94a3b8,
+        metalness: 0.9,
+        roughness: 0.2
+      });
+
+      const wheelPositions = [
+        [-0.92, 0.24, 0.8],
+        [0.92, 0.24, 0.8],
+        [-0.92, 0.24, -0.8],
+        [0.92, 0.24, -0.8]
+      ];
+
+      wheelPositions.forEach(pos => {
+        const wheelGroup = new THREE.Group();
+        wheelGroup.position.set(pos[0], pos[1], pos[2]);
+
+        const tire = new THREE.Mesh(wheelGeo, wheelMat);
+        tire.rotation.z = Math.PI / 2;
+        tire.castShadow = true;
+        wheelGroup.add(tire);
+
+        const rimGeo = new THREE.CylinderGeometry(0.15, 0.15, 0.17, 16);
+        const rim = new THREE.Mesh(rimGeo, rimMat);
+        rim.rotation.z = Math.PI / 2;
+        wheelGroup.add(rim);
+
+        robotGroup.add(wheelGroup);
+        wheels.push(wheelGroup);
+      });
+
+      // 2. 360° LIDAR TURRET (ON TOP)
+      const lidarBaseGeo = new THREE.CylinderGeometry(0.16, 0.18, 0.12, 32);
+      const lidarBaseMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.3 });
+      const lidarBase = new THREE.Mesh(lidarBaseGeo, lidarBaseMat);
+      lidarBase.position.set(0, 1.95, -0.9);
+      robotGroup.add(lidarBase);
+
+      const lidarPuckGeo = new THREE.CylinderGeometry(0.14, 0.14, 0.14, 32);
+      const lidarPuckMat = new THREE.MeshStandardMaterial({
+        color: 0x090d16,
+        roughness: 0.1,
+        metalness: 0.9
+      });
+      lidarPuck = new THREE.Mesh(lidarPuckGeo, lidarPuckMat);
+      lidarPuck.position.set(0, 2.08, -0.9);
+      robotGroup.add(lidarPuck);
+
+      // LiDAR Optics Blue Glow
+      const lidarLensGeo = new THREE.BoxGeometry(0.04, 0.05, 0.15);
+      const lidarLensMat = new THREE.MeshBasicMaterial({ color: 0x00d2ff });
+      const lidarLens = new THREE.Mesh(lidarLensGeo, lidarLensMat);
+      lidarLens.position.set(0.12, 0, 0);
+      lidarPuck.add(lidarLens);
+
+      // 3. OUTER MEDICAL-GRADE SHELL (White & Anthracite)
+      const medicalWhiteMat = new THREE.MeshStandardMaterial({
+        color: 0xf8fafc,
+        roughness: 0.2,
+        metalness: 0.1,
+        transparent: true,
+        opacity: 1.0
+      });
+      shellMaterials.push(medicalWhiteMat);
+
+      const darkAccentMat = new THREE.MeshStandardMaterial({
+        color: 0x1e2430,
+        roughness: 0.35,
+        metalness: 0.6,
+        transparent: true,
+        opacity: 1.0
+      });
+      shellMaterials.push(darkAccentMat);
+
+      // Main Outer Body Hood
+      const hoodGeo = new THREE.BoxGeometry(1.64, 1.35, 2.5);
+      const mainHood = new THREE.Mesh(hoodGeo, medicalWhiteMat);
+      mainHood.position.set(0, 1.15, 0);
+      mainHood.castShadow = true;
+      outerShellGroup.add(mainHood);
+
+      // Dark Lower Skirting Trim
+      const skirtGeo = new THREE.BoxGeometry(1.68, 0.22, 2.54);
+      const skirt = new THREE.Mesh(skirtGeo, darkAccentMat);
+      skirt.position.set(0, 0.52, 0);
+      outerShellGroup.add(skirt);
+
+      // Medical Cross Livery (Sides)
+      const crossMat = new THREE.MeshBasicMaterial({ color: 0xef4444, transparent: true, opacity: 1 });
+      shellMaterials.push(crossMat);
+
+      [-0.83, 0.83].forEach(xPos => {
+        const crossH = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.08, 0.3), crossMat);
+        crossH.position.set(xPos, 1.3, 0.7);
+        outerShellGroup.add(crossH);
+
+        const crossV = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.3, 0.08), crossMat);
+        crossV.position.set(xPos, 1.3, 0.7);
+        outerShellGroup.add(crossV);
+      });
+
+      // Front Automated Intake Door / Flap
+      const doorGeo = new THREE.BoxGeometry(1.1, 0.55, 0.08);
+      const doorMat = new THREE.MeshStandardMaterial({
+        color: 0x00d2ff,
+        emissive: 0x003366,
+        emissiveIntensity: 0.3,
+        roughness: 0.2,
+        metalness: 0.8,
+        transparent: true,
+        opacity: 1.0
+      });
+      shellMaterials.push(doorMat);
+
+      frontDoor = new THREE.Mesh(doorGeo, doorMat);
+      frontDoor.position.set(0, 1.25, -1.26);
+      outerShellGroup.add(frontDoor);
+
+      // Wireframe CAD Overlay for Ghost Cutaway View
+      const wireGeo = new THREE.EdgesGeometry(hoodGeo);
+      const wireMat = new THREE.LineBasicMaterial({
+        color: 0x00d2ff,
+        transparent: true,
+        opacity: 0.0
+      });
+      const wireframe = new THREE.LineSegments(wireGeo, wireMat);
+      wireframe.position.copy(mainHood.position);
+      wireframeShells.push(wireMat);
+      outerShellGroup.add(wireframe);
+
+      robotGroup.add(outerShellGroup);
+
+      // 4. INTERNAL MECHANISMS (Cutaway visible inside)
+      buildInternalMechanisms();
+      robotGroup.add(internalMechanismGroup);
+    }
+
+    /* --------------------------------------------------------------------------
+       INTERNAL MECHANISM: Hopper, Conveyor, AI Gantry, 4 Arms, 4 Chutes, 4 Bins
+       -------------------------------------------------------------------------- */
+    function buildInternalMechanisms() {
+      // (A) Internal Intake Hopper
+      const hopperGeo = new THREE.BoxGeometry(1.2, 0.45, 0.6);
+      const stainlessMat = new THREE.MeshStandardMaterial({
+        color: 0xd1d5db,
+        metalness: 0.9,
+        roughness: 0.2
+      });
+      const hopper = new THREE.Mesh(hopperGeo, stainlessMat);
+      hopper.position.set(0, 1.2, -0.9);
+      hopper.rotation.x = Math.PI / 10;
+      internalMechanismGroup.add(hopper);
+
+      // (B) Modular Conveyor Belt System
+      const conveyorFrameGeo = new THREE.BoxGeometry(0.7, 0.12, 1.7);
+      const conveyorFrameMat = new THREE.MeshStandardMaterial({ color: 0x374151, metalness: 0.8, roughness: 0.4 });
+      const conveyorFrame = new THREE.Mesh(conveyorFrameGeo, conveyorFrameMat);
+      conveyorFrame.position.set(0, 1.05, 0.2);
+      internalMechanismGroup.add(conveyorFrame);
+
+      // Moving Belt Surface
+      const beltGeo = new THREE.BoxGeometry(0.55, 0.02, 1.65);
+      const beltMat = new THREE.MeshStandardMaterial({
+        color: 0x111827,
+        roughness: 0.7,
+        metalness: 0.1
+      });
+      conveyorBelt = new THREE.Mesh(beltGeo, beltMat);
+      conveyorBelt.position.set(0, 1.12, 0.2);
+      internalMechanismGroup.add(conveyorBelt);
+
+      // Conveyor Rollers
+      for (let z of [-0.6, 0, 0.6, 1.0]) {
+        const rollerGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.65, 16);
+        const roller = new THREE.Mesh(rollerGeo, stainlessMat);
+        roller.rotation.z = Math.PI / 2;
+        roller.position.set(0, 1.04, z);
+        internalMechanismGroup.add(roller);
+      }
+
+      // (C) AI Vision Camera Gantry
+      const gantryArchGeo = new THREE.BoxGeometry(0.9, 0.06, 0.08);
+      const gantryMat = new THREE.MeshStandardMaterial({ color: 0x1f2937, metalness: 0.8, roughness: 0.3 });
+      const gantryArch = new THREE.Mesh(gantryArchGeo, gantryMat);
+      gantryArch.position.set(0, 1.65, -0.5);
+      internalMechanismGroup.add(gantryArch);
+
+      // Gantry Vertical Struts
+      [-0.42, 0.42].forEach(xPos => {
+        const strut = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.6, 0.06), gantryMat);
+        strut.position.set(xPos, 1.35, -0.5);
+        internalMechanismGroup.add(strut);
+      });
+
+      // AI Dual Optical Camera Housing
+      const camHousingGeo = new THREE.BoxGeometry(0.24, 0.12, 0.16);
+      const camHousingMat = new THREE.MeshStandardMaterial({ color: 0x0369a1, metalness: 0.7, roughness: 0.2 });
+      const camHousing = new THREE.Mesh(camHousingGeo, camHousingMat);
+      camHousing.position.set(0, 1.58, -0.5);
+      internalMechanismGroup.add(camHousing);
+
+      // Dual Lenses
+      [-0.06, 0.06].forEach(xPos => {
+        const lensGeo = new THREE.CylinderGeometry(0.03, 0.03, 0.04, 16);
+        const lensMat = new THREE.MeshBasicMaterial({ color: 0x00d2ff });
+        const lens = new THREE.Mesh(lensGeo, lensMat);
+        lens.rotation.x = Math.PI / 2;
+        lens.position.set(xPos, 1.58, -0.42);
+        internalMechanismGroup.add(lens);
+      });
+
+      // AI Laser Scanner Cone (Volumetric Holographic Fan)
+      const laserConeGeo = new THREE.ConeGeometry(0.35, 0.65, 32, 1, true);
+      const laserConeMat = new THREE.MeshBasicMaterial({
+        color: 0x00d2ff,
+        transparent: true,
+        opacity: 0.0,
+        side: THREE.DoubleSide
+      });
+      laserProjectorMesh = new THREE.Mesh(laserConeGeo, laserConeMat);
+      laserProjectorMesh.position.set(0, 1.25, -0.5);
+      laserProjectorMesh.rotation.x = Math.PI;
+      internalMechanismGroup.add(laserProjectorMesh);
+
+      // (D) 4 SHARED MULTI-AXIS ROBOTIC SORTING ARMS
+      // Placed sequentially along the conveyor:
+      // Arm 0: Yellow (Infectious)
+      // Arm 1: Red (Plastic)
+      // Arm 2: White (Sharps)
+      // Arm 3: Blue (Glass/Pharma)
+      const armZPositions = [-0.3, 0.1, 0.5, 0.9];
+      const armCategoryColors = [0xf59e0b, 0xef4444, 0xf8fafc, 0x3b82f6];
+
+      for (let i = 0; i < 4; i++) {
+        const armGroup = new THREE.Group();
+        // Positioned alternately on left and right sides of conveyor
+        const isLeft = (i % 2 === 0);
+        const armX = isLeft ? -0.45 : 0.45;
+        armGroup.position.set(armX, 1.08, armZPositions[i]);
+
+        // Base Turret (Yaw rotation)
+        const baseTurretGeo = new THREE.CylinderGeometry(0.07, 0.08, 0.08, 20);
+        const baseTurretMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.9, roughness: 0.3 });
+        const baseTurret = new THREE.Mesh(baseTurretGeo, baseTurretMat);
+        armGroup.add(baseTurret);
+
+        // Shoulder Joint
+        const shoulder = new THREE.Group();
+        shoulder.position.y = 0.06;
+
+        // Shoulder Servo
+        const servoGeo = new THREE.SphereGeometry(0.06, 16, 16);
+        const servoMat = new THREE.MeshStandardMaterial({ color: armCategoryColors[i], metalness: 0.5, roughness: 0.3 });
+        const servoMesh = new THREE.Mesh(servoGeo, servoMat);
+        shoulder.add(servoMesh);
+
+        // Upper Arm Link
+        const upperArmGeo = new THREE.BoxGeometry(0.04, 0.28, 0.04);
+        const upperArmMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.8, roughness: 0.2 });
+        const upperArm = new THREE.Mesh(upperArmGeo, upperArmMat);
+        upperArm.position.y = 0.14;
+        shoulder.add(upperArm);
+
+        // Elbow Joint
+        const elbow = new THREE.Group();
+        elbow.position.y = 0.28;
+
+        const elbowServo = new THREE.Mesh(new THREE.SphereGeometry(0.05, 16, 16), servoMat);
+        elbow.add(elbowServo);
+
+        // Forearm Link
+        const forearm = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.24, 0.035), upperArmMat);
+        forearm.position.y = 0.12;
+        elbow.add(forearm);
+
+        // Wrist & Gripper
+        const wrist = new THREE.Group();
+        wrist.position.y = 0.24;
+
+        // Gripper Claws (2-finger parallel gripper)
+        const clawMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.9, roughness: 0.2 });
+        const clawL = new THREE.Mesh(new THREE.BoxGeometry(0.015, 0.08, 0.03), clawMat);
+        clawL.position.set(-0.025, 0.04, 0);
+        const clawR = new THREE.Mesh(new THREE.BoxGeometry(0.015, 0.08, 0.03), clawMat);
+        clawR.position.set(0.025, 0.04, 0);
+        wrist.add(clawL);
+        wrist.add(clawR);
+
+        elbow.add(wrist);
+        shoulder.add(elbow);
+        armGroup.add(shoulder);
+
+        internalMechanismGroup.add(armGroup);
+
+        roboticArms.push({
+          group: armGroup,
+          shoulder: shoulder,
+          elbow: elbow,
+          wrist: wrist,
+          baseTurret: baseTurret,
+          isLeft: isLeft,
+          color: armCategoryColors[i],
+          targetZ: armZPositions[i],
+          homeRot: {
+            turret: 0,
+            shoulder: isLeft ? 0.3 : -0.3,
+            elbow: -0.6
+          }
+        });
+      }
+
+      // (E) 4 GRAVITY CHUTES (Angled drop channels)
+      for (let i = 0; i < 4; i++) {
+        const isLeft = (i % 2 === 0);
+        const chuteGeo = new THREE.CylinderGeometry(0.14, 0.16, 0.55, 16, 1, true);
+        const chuteMat = new THREE.MeshStandardMaterial({
+          color: 0x475569,
+          metalness: 0.8,
+          roughness: 0.3,
+          side: THREE.DoubleSide
+        });
+        const chute = new THREE.Mesh(chuteGeo, chuteMat);
+        const chuteX = isLeft ? -0.55 : 0.55;
+        chute.position.set(chuteX, 0.85, armZPositions[i]);
+        chute.rotation.z = isLeft ? Math.PI / 6 : -Math.PI / 6;
+        internalMechanismGroup.add(chute);
+        gravityChutes.push(chute);
+      }
+
+      // (F) 4 SEPARATE SEALED WASTE COMPARTMENTS (Base Level)
+      // Bin 0: Yellow (Infectious)
+      // Bin 1: Red (Plastic)
+      // Bin 2: White (Sharps)
+      // Bin 3: Blue (Glass/Pharma)
+      const binPositions = [
+        [-0.55, 0.5, -0.3], // Yellow (Front Left)
+        [0.55, 0.5, 0.1],   // Red (Mid Right)
+        [-0.55, 0.5, 0.5],  // White (Mid Left)
+        [0.55, 0.5, 0.9]    // Blue (Rear Right)
+      ];
+
+      for (let i = 0; i < 4; i++) {
+        const binGroup = new THREE.Group();
+        binGroup.position.set(binPositions[i][0], binPositions[i][1], binPositions[i][2]);
+
+        const tankGeo = new THREE.BoxGeometry(0.48, 0.42, 0.36);
+        const tankMat = new THREE.MeshStandardMaterial({
+          color: armCategoryColors[i],
+          metalness: 0.3,
+          roughness: 0.4,
+          transparent: true,
+          opacity: 0.85
+        });
+        const tank = new THREE.Mesh(tankGeo, tankMat);
+        tank.castShadow = true;
+        binGroup.add(tank);
+
+        // UV-C Germicidal LED inside each bin (Purple disinfection glow)
+        const uvcLedGeo = new THREE.SphereGeometry(0.04, 12, 12);
+        const uvcMat = new THREE.MeshBasicMaterial({ color: 0xa855f7 });
+        const uvcLed = new THREE.Mesh(uvcLedGeo, uvcMat);
+        uvcLed.position.set(0, 0.16, 0);
+        binGroup.add(uvcLed);
+
+        internalMechanismGroup.add(binGroup);
+        compartments.push({ group: binGroup, tank: tank, uvc: uvcLed, color: armCategoryColors[i] });
+      }
+
+      // (G) REPRESENTATIVE CLEAN MEDICAL WASTE ITEMS (4 Streams)
+      createWasteItems();
+    }
+
+    /* --------------------------------------------------------------------------
+       CREATE 4 CLEAN MEDICAL WASTE OBJECTS
+       -------------------------------------------------------------------------- */
+    function createWasteItems() {
+      // 1. YELLOW: Sealed Pathological/Infectious Pouch
+      const yellowGeo = new THREE.BoxGeometry(0.12, 0.08, 0.14);
+      const yellowMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.4, metalness: 0.1 });
+      const yellowItem = new THREE.Mesh(yellowGeo, yellowMat);
+      yellowItem.position.set(0, 1.18, -0.9);
+      internalMechanismGroup.add(yellowItem);
+
+      // 2. RED: Clinical Plastic Bottle/Tubing Item
+      const redGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.14, 16);
+      const redMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.2, metalness: 0.2 });
+      const redItem = new THREE.Mesh(redGeo, redMat);
+      redItem.rotation.z = Math.PI / 2;
+      redItem.position.set(0, 1.18, -1.2);
+      internalMechanismGroup.add(redItem);
+
+      // 3. WHITE: Rigid Translucent Sharps Disposal Box
+      const whiteGeo = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+      const whiteMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.2, metalness: 0.1 });
+      const whiteItem = new THREE.Mesh(whiteGeo, whiteMat);
+      whiteItem.position.set(0, 1.18, -1.5);
+      internalMechanismGroup.add(whiteItem);
+
+      // 4. BLUE: Glass Medicine Ampoule / Specimen Vial
+      const blueGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.12, 16);
+      const blueMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.1, metalness: 0.6 });
+      const blueItem = new THREE.Mesh(blueGeo, blueMat);
+      blueItem.position.set(0, 1.18, -1.8);
+      internalMechanismGroup.add(blueItem);
+
+      wasteItems = [
+        { mesh: yellowItem, type: 'yellow', name: 'Yellow: Infectious Pouch', initialZ: -0.9, targetArm: 0, picked: false, sorted: false },
+        { mesh: redItem, type: 'red', name: 'Red: Recyclable Plastic', initialZ: -1.2, targetArm: 1, picked: false, sorted: false },
+        { mesh: whiteItem, type: 'white', name: 'White: Sharps Container', initialZ: -1.5, targetArm: 2, picked: false, sorted: false },
+        { mesh: blueItem, type: 'blue', name: 'Blue: Glass Vial/Ampoule', initialZ: -1.8, targetArm: 3, picked: false, sorted: false }
+      ];
+    }
+
+    /* --------------------------------------------------------------------------
+       ANIMATION TIMELINE EVALUATION (0 to 20 SECONDS EXACT SEQUENCE)
+       -------------------------------------------------------------------------- */
+    function evaluateTimeline(t) {
+      // 1. Wheel Rotation (always rolling when moving)
+      const isMoving = (t >= 0 && t < 3.0) || (t >= 15.0 && t < 18.0);
+      if (isMoving) {
+        wheels.forEach(w => w.children[0].rotation.x += 0.08);
+      }
+
+      // 2. LiDAR Puck Continuous 360° Scan
+      if (lidarPuck) {
+        lidarPuck.rotation.y += 0.06;
+      }
+
+      // ------------------------------------------------------------------------
+      // SCENE 1: 0.0s - 3.0s &bull; AUTONOMOUS CORRIDOR TRANSIT
+      // ------------------------------------------------------------------------
+      if (t < 3.0) {
+        const progress = t / 3.0; // 0 to 1
+        // Robot moves along z from 2.0 to -4.0 (approaching ward bin)
+        robotGroup.position.set(-2.5 * (1 - progress), 0, 2.0 - progress * 6.0);
+        robotGroup.rotation.y = 0;
+
+        // Shell is solid
+        setCutawayOpacity(0.0);
+
+        // Front door closed
+        frontDoor.position.y = 1.25;
+
+        // AI Laser scanner off
+        laserProjectorMesh.material.opacity = 0.0;
+
+        // Reset waste items
+        resetWastePositions();
+
+        // UI Updates
+        updateHUD("00–03s • CORRIDOR NAVIGATION", "Autonomous Ward Transit", "Differential-drive mobile base navigates hospital corridor towards ward waste station.", "NAVIGATING", "85%", "#10b981", "Standby");
+        highlightCategory(null);
+        hideHeroTitle();
+
+        // Camera Director Track
+        if (activeCameraMode === 'cinematic') {
+          cameraPos.set(robotGroup.position.x - 3.5, 2.2, robotGroup.position.z + 4.0);
+          cameraTarget.set(robotGroup.position.x, 1.1, robotGroup.position.z);
+        }
+      }
+
+      // ------------------------------------------------------------------------
+      // SCENE 2: 3.0s - 5.0s &bull; AUTHORIZATION & INTAKE
+      // ------------------------------------------------------------------------
+      else if (t >= 3.0 && t < 5.0) {
+        const progress = (t - 3.0) / 2.0; // 0 to 1
+        robotGroup.position.set(-2.5, 0, -4.0);
+        robotGroup.rotation.y = 0;
+
+        // Nurse RFID badge pulses
+        nurseRfidBadge.scale.setScalar(1.0 + Math.sin(t * 12) * 0.3);
+
+        // Front door opens smoothly (rises up)
+        const doorOpenAmount = Math.min(1.0, progress * 2.5);
+        frontDoor.position.y = 1.25 + doorOpenAmount * 0.5;
+
+        // Waste enters hopper
+        wasteItems[0].mesh.position.set(0, 1.25 - progress * 0.1, -1.2 + progress * 0.3);
+
+        setCutawayOpacity(progress * 0.4); // Starts fading
+        laserProjectorMesh.material.opacity = 0.0;
+
+        updateHUD("03–05s • AUTHORIZED INTAKE", "Badge Access & Waste Reception", "Staff authorizes transfer. Motorized front intake opens and safely receives ward biomedical waste.", "INTAKE ACTIVE", "83%", "#f59e0b", "Hopper Feeding");
+        highlightCategory(null);
+        hideHeroTitle();
+
+        if (activeCameraMode === 'cinematic') {
+          cameraPos.set(robotGroup.position.x + 2.5, 1.8, robotGroup.position.z - 2.8);
+          cameraTarget.set(robotGroup.position.x, 1.2, robotGroup.position.z - 0.8);
+        }
+      }
+
+      // ------------------------------------------------------------------------
+      // SCENE 3: 5.0s - 8.0s &bull; CUTAWAY & AI SCANNING STATION
+      // ------------------------------------------------------------------------
+      else if (t >= 5.0 && t < 8.0) {
+        const progress = (t - 5.0) / 3.0; // 0 to 1
+        robotGroup.position.set(-2.5, 0, -4.0);
+
+        // Full CAD Cutaway Ghost Shell (85% transparent with glowing cyan wireframe)
+        setCutawayOpacity(0.85);
+
+        // Front door closes back
+        frontDoor.position.y = 1.25;
+
+        // Conveyor moves waste toward AI vision scanner
+        const itemZ = -0.9 + progress * 0.4;
+        wasteItems[0].mesh.position.set(0, 1.18, itemZ);
+        wasteItems[1].mesh.position.set(0, 1.18, itemZ - 0.3);
+        wasteItems[2].mesh.position.set(0, 1.18, itemZ - 0.6);
+        wasteItems[3].mesh.position.set(0, 1.18, itemZ - 0.9);
+
+        // Active AI Laser Fan Cone projection
+        laserProjectorMesh.material.opacity = 0.4 + Math.sin(t * 15) * 0.2;
+        laserProjectorMesh.rotation.y += 0.04;
+
+        updateHUD("05–08s • CAD CUTAWAY & AI SCAN", "Internal Mechanism & AI Vision Station", "Cutaway reveals hopper feeding conveyor. Dual optical cameras and depth sensor scan approaching waste stream.", "AI SCANNING", "80%", "#00d2ff", "Camera Active");
+        highlightCategory('yellow');
+        hideHeroTitle();
+
+        if (activeCameraMode === 'cinematic') {
+          // Smooth rise to CAD isometric perspective
+          cameraPos.set(robotGroup.position.x - 2.8, 3.2, robotGroup.position.z + 2.2);
+          cameraTarget.set(robotGroup.position.x, 1.2, robotGroup.position.z);
+        }
+      }
+
+      // ------------------------------------------------------------------------
+      // SCENE 4: 8.0s - 12.0s &bull; 4 SHARED ROBOTIC ARMS SORTING
+      // ------------------------------------------------------------------------
+      else if (t >= 8.0 && t < 12.0) {
+        const progress = (t - 8.0) / 4.0; // 0 to 1
+        robotGroup.position.set(-2.5, 0, -4.0);
+        setCutawayOpacity(0.85);
+
+        laserProjectorMesh.material.opacity = 0.2;
+
+        // Animate 4 Arms Pick & Place in sequence:
+        // Arm 0 (Yellow) -> 8.0s to 9.0s
+        // Arm 1 (Red)    -> 9.0s to 10.0s
+        // Arm 2 (White)  -> 10.0s to 11.0s
+        // Arm 3 (Blue)   -> 11.0s to 12.0s
+        const subPhase = (t - 8.0); // 0 to 4
+        const armIndex = Math.min(3, Math.floor(subPhase));
+        const armFraction = subPhase - armIndex; // 0 to 1 for active arm
+
+        animateArmSorting(armIndex, armFraction);
+
+        // Highlight active sorting category
+        const cats = ['yellow', 'red', 'white', 'blue'];
+        highlightCategory(cats[armIndex]);
+
+        const catNames = ["Yellow (Infectious)", "Red (Plastic)", "White (Sharps)", "Blue (Glass/Metal)"];
+        updateHUD("08–12s • ROBOTIC SEGREGATION", `Arm #${armIndex + 1} Sorting: ${catNames[armIndex]}`, "AI identifies category. Multi-axis precision robotic arm picks waste item and swivels to its dedicated gravity chute.", "SEGREGATING", "76%", "#38bdf8", `Arm ${armIndex+1} Active`);
+        hideHeroTitle();
+
+        if (activeCameraMode === 'cinematic') {
+          // Dynamic tracking of active arm
+          const activeArmZ = roboticArms[armIndex].targetZ;
+          cameraPos.set(robotGroup.position.x + (roboticArms[armIndex].isLeft ? -2.2 : 2.2), 2.2, robotGroup.position.z + activeArmZ + 0.8);
+          cameraTarget.set(robotGroup.position.x, 1.1, robotGroup.position.z + activeArmZ);
+        }
+      }
+
+      // ------------------------------------------------------------------------
+      // SCENE 5: 12.0s - 15.0s &bull; GRAVITY CHUTES & SEALED COMPARTMENTS
+      // ------------------------------------------------------------------------
+      else if (t >= 12.0 && t < 15.0) {
+        const progress = (t - 12.0) / 3.0; // 0 to 1
+        robotGroup.position.set(-2.5, 0, -4.0);
+        setCutawayOpacity(0.7);
+
+        // Reset arms to resting position
+        roboticArms.forEach(arm => {
+          arm.shoulder.rotation.z = arm.homeRot.shoulder;
+          arm.elbow.rotation.z = arm.homeRot.elbow;
+          arm.group.rotation.y = 0;
+        });
+
+        // Waste items settled in 4 sealed tanks
+        wasteItems[0].mesh.position.set(-0.55, 0.45, -0.3);
+        wasteItems[1].mesh.position.set(0.55, 0.45, 0.1);
+        wasteItems[2].mesh.position.set(-0.55, 0.45, 0.5);
+        wasteItems[3].mesh.position.set(0.55, 0.45, 0.9);
+
+        // Pulsing UV-C germicidal LEDs in all 4 tanks
+        compartments.forEach((comp, idx) => {
+          comp.uvc.scale.setScalar(1.0 + Math.sin(t * 8 + idx) * 0.4);
+        });
+
+        updateHUD("12–15s • SEALED COMPARTMENTS", "Gravity Chute Drop & UV Sterilization", "Waste travels down gravity chutes into 4 hermetically sealed compartments with automated UV-C disinfection.", "SEALED & STERILIZED", "72%", "#a855f7", "All 4 Bins Locked");
+        highlightCategory(null);
+        hideHeroTitle();
+
+        if (activeCameraMode === 'cinematic') {
+          // Low angle showing chutes and bottom sealed compartments
+          cameraPos.set(robotGroup.position.x - 2.4, 1.4, robotGroup.position.z + 0.5);
+          cameraTarget.set(robotGroup.position.x, 0.6, robotGroup.position.z + 0.2);
+        }
+      }
+
+      // ------------------------------------------------------------------------
+      // SCENE 6: 15.0s - 18.0s &bull; SOLID EXTERNAL RESEAL & RETURN
+      // ------------------------------------------------------------------------
+      else if (t >= 15.0 && t < 18.0) {
+        const progress = (t - 15.0) / 3.0; // 0 to 1
+        // Body solidifies back to pristine medical white/gray
+        setCutawayOpacity(Math.max(0, 0.7 - progress * 1.5));
+
+        // Robot turns and travels back down corridor to charging dock (z = 5.0)
+        const currentZ = -4.0 + progress * 9.0;
+        robotGroup.position.set(-2.5 * (1 - progress * 0.8), 0, currentZ);
+        robotGroup.rotation.y = 0;
+
+        // Battery drops to 28% triggering return
+        const batteryPct = Math.round(72 - progress * 44); // 72% down to 28%
+        const batteryColor = batteryPct < 30 ? "#ef4444" : "#f59e0b";
+
+        updateHUD("15–18s • TRANSIT & RETURN", "Docking Transit (Battery Low: 28%)", "Outer shell securely seals. Robot autonomously returns to corridor inductive docking station.", "RETURNING TO DOCK", `${batteryPct}%`, batteryColor, "En Route to Station");
+        highlightCategory(null);
+        hideHeroTitle();
+
+        if (activeCameraMode === 'cinematic') {
+          cameraPos.set(robotGroup.position.x + 3.2, 2.0, robotGroup.position.z - 3.0);
+          cameraTarget.set(robotGroup.position.x, 1.0, robotGroup.position.z);
+        }
+      }
+
+      // ------------------------------------------------------------------------
+      // SCENE 7: 18.0s - 20.0s &bull; HERO SHOT & DOCKING AT CHARGING STATION
+      // ------------------------------------------------------------------------
+      else if (t >= 18.0 && t <= 20.0) {
+        const progress = (t - 18.0) / 2.0; // 0 to 1
+        robotGroup.position.set(0, 0, 5.0);
+        robotGroup.rotation.y = 0;
+        setCutawayOpacity(0.0);
+
+        // Inductive charging ring glow pulses
+        chargingStation.children[1].material.emissiveIntensity = 1.2 + Math.sin(t * 10) * 0.5;
+
+        updateHUD("18–20s • DOCKED & CHARGING", "Autonomous Inductive Docking", "Robot aligns with charging station. Inductive power transfer active. Ready for next scheduled hospital run.", "CHARGING ACTIVE", "28% (Charging)", "#10b981", "Standby / Ready");
+        highlightCategory(null);
+        showHeroTitle();
+
+        if (activeCameraMode === 'cinematic') {
+          // Slow cinematic orbital sweep around hero robot
+          const angle = progress * Math.PI * 0.6 + 0.4;
+          const radius = 5.2;
+          cameraPos.set(Math.sin(angle) * radius, 1.8 + Math.sin(progress * Math.PI) * 0.4, 5.0 + Math.cos(angle) * radius);
+          cameraTarget.set(0, 1.1, 5.0);
+        }
+      }
+
+      // Apply Camera Positions
+      if (activeCameraMode === 'cinematic') {
+        camera.position.lerp(cameraPos, 0.08);
+        controls.target.lerp(cameraTarget, 0.08);
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       ROBOTIC ARM PICK & PLACE INTERPOLATION
+       -------------------------------------------------------------------------- */
+    function animateArmSorting(armIdx, fraction) {
+      const arm = roboticArms[armIdx];
+      const item = wasteItems[armIdx];
+      const isLeft = arm.isLeft;
+
+      if (fraction < 0.25) {
+        // Phase 1: Reach down to conveyor
+        const f = fraction / 0.25;
+        arm.shoulder.rotation.z = arm.homeRot.shoulder + (isLeft ? 0.3 : -0.3) * f;
+        arm.elbow.rotation.z = arm.homeRot.elbow - 0.4 * f;
+        arm.group.rotation.y = 0;
+        item.mesh.position.set(0, 1.18, arm.targetZ);
+      } else if (fraction < 0.55) {
+        // Phase 2: Grip item & lift
+        const f = (fraction - 0.25) / 0.3;
+        arm.shoulder.rotation.z = (arm.homeRot.shoulder + (isLeft ? 0.3 : -0.3)) - 0.2 * f;
+        arm.elbow.rotation.z = (arm.homeRot.elbow - 0.4) + 0.3 * f;
+        item.mesh.position.set(0, 1.18 + f * 0.15, arm.targetZ);
+      } else if (fraction < 0.85) {
+        // Phase 3: Swivel arm to chute & drop
+        const f = (fraction - 0.55) / 0.3;
+        const targetYaw = isLeft ? -Math.PI / 3 : Math.PI / 3;
+        arm.group.rotation.y = targetYaw * f;
+        const dropX = isLeft ? -f * 0.5 : f * 0.5;
+        item.mesh.position.set(dropX, 1.33 - f * 0.3, arm.targetZ);
+      } else {
+        // Phase 4: Waste slides down gravity chute into sealed bin
+        const f = (fraction - 0.85) / 0.15;
+        const finalX = isLeft ? -0.55 : 0.55;
+        item.mesh.position.set(finalX, 1.03 - f * 0.55, arm.targetZ);
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       RESET WASTE ITEMS TO CONVEYOR START
+       -------------------------------------------------------------------------- */
+    function resetWastePositions() {
+      wasteItems.forEach(item => {
+        item.mesh.position.set(0, 1.18, item.initialZ);
+      });
+      roboticArms.forEach(arm => {
+        arm.shoulder.rotation.z = arm.homeRot.shoulder;
+        arm.elbow.rotation.z = arm.homeRot.elbow;
+        arm.group.rotation.y = 0;
+      });
+    }
+
+    /* --------------------------------------------------------------------------
+       CUTAWAY TRANSPARENCY CONTROLLER
+       -------------------------------------------------------------------------- */
+    function setCutawayOpacity(cutawayFraction) {
+      // cutawayFraction: 0.0 (Opaque) to 1.0 (Full Cutaway Ghost)
+      const shellOpacity = Math.max(0.12, 1.0 - cutawayFraction * 0.88);
+      shellMaterials.forEach(mat => {
+        mat.opacity = shellOpacity;
+        mat.transparent = true;
+      });
+      wireframeShells.forEach(mat => {
+        mat.opacity = cutawayFraction * 0.75;
+      });
+
+      document.getElementById('cutawaySlider').value = Math.round(cutawayFraction * 100);
+      document.getElementById('cutawayVal').innerText = `${Math.round(cutawayFraction * 100)}%`;
+    }
+
+    /* --------------------------------------------------------------------------
+       HUD & TELEMETRY UPDATERS
+       -------------------------------------------------------------------------- */
+    function updateHUD(phasePillText, headlineText, descText, navState, batteryText, batteryColor, armState) {
+      document.getElementById('phasePill').innerText = phasePillText;
+      document.getElementById('phaseHeadline').innerText = headlineText;
+      document.getElementById('phaseDesc').innerText = descText;
+
+      document.getElementById('telNav').innerText = navState;
+      document.getElementById('telArm').innerText = armState;
+      document.getElementById('telBattery').innerText = batteryText;
+      document.getElementById('telBattery').style.color = batteryColor;
+
+      const batteryFill = document.getElementById('batteryBar');
+      batteryFill.style.width = batteryText.replace('%', '') + '%';
+      batteryFill.style.backgroundColor = batteryColor;
+
+      // Update Timeline Progress Bar & Readout
+      const pct = (currentTime / TOTAL_DURATION) * 100;
+      document.getElementById('timelineFill').style.width = `${pct}%`;
+      document.getElementById('timelineScrubber').style.left = `${pct}%`;
+      document.getElementById('timeReadout').innerText = `${currentTime.toFixed(1)}s / 20.0s`;
+
+      // Update Active Tab Highlight
+      updateActiveSceneTab();
+    }
+
+    function highlightCategory(cat) {
+      ['yellow', 'red', 'white', 'blue'].forEach(c => {
+        const el = document.getElementById('cat' + c.charAt(0).toUpperCase() + c.slice(1));
+        if (el) {
+          if (c === cat) el.classList.add('active');
+          else el.classList.remove('active');
+        }
+      });
+    }
+
+    function showHeroTitle() {
+      document.getElementById('heroTitle').classList.add('visible');
+    }
+
+    function hideHeroTitle() {
+      document.getElementById('heroTitle').classList.remove('visible');
+    }
+
+    function updateActiveSceneTab() {
+      const tabs = document.querySelectorAll('.tab-scene');
+      tabs.forEach(tab => {
+        const tVal = parseFloat(tab.getAttribute('data-time'));
+        let isActive = false;
+        if (tVal === 0 && currentTime < 3) isActive = true;
+        else if (tVal === 3 && currentTime >= 3 && currentTime < 5) isActive = true;
+        else if (tVal === 5 && currentTime >= 5 && currentTime < 8) isActive = true;
+        else if (tVal === 8 && currentTime >= 8 && currentTime < 12) isActive = true;
+        else if (tVal === 12 && currentTime >= 12 && currentTime < 15) isActive = true;
+        else if (tVal === 15 && currentTime >= 15 && currentTime < 18) isActive = true;
+        else if (tVal === 18 && currentTime >= 18) isActive = true;
+
+        if (isActive) tab.classList.add('active');
+        else tab.classList.remove('active');
+      });
+    }
+
+    /* --------------------------------------------------------------------------
+       CAMERA PRESET SWITCHER
+       -------------------------------------------------------------------------- */
+    function setCameraPreset(mode) {
+      activeCameraMode = mode;
+      document.querySelectorAll('.btn-cam').forEach(b => b.classList.remove('active'));
+      const btn = document.querySelector(`[data-cam="${mode}"]`);
+      if (btn) btn.classList.add('active');
+
+      if (mode === 'isometric') {
+        camera.position.set(-5, 4.5, 5);
+        controls.target.set(robotGroup.position.x, 1.2, robotGroup.position.z);
+      } else if (mode === 'top') {
+        camera.position.set(robotGroup.position.x, 6, robotGroup.position.z);
+        controls.target.set(robotGroup.position.x, 1.0, robotGroup.position.z);
+      } else if (mode === 'chutes') {
+        camera.position.set(robotGroup.position.x + 2.5, 1.0, robotGroup.position.z + 1.2);
+        controls.target.set(robotGroup.position.x, 0.7, robotGroup.position.z);
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       UI & PLAYBACK EVENTS
+       -------------------------------------------------------------------------- */
+    function setupUIEvents() {
+      // Play / Pause
+      const btnPlay = document.getElementById('btnPlayPause');
+      const playIcon = document.getElementById('playIcon');
+      const pauseIcon = document.getElementById('pauseIcon');
+
+      function togglePlay() {
+        isPlaying = !isPlaying;
+        playIcon.style.display = isPlaying ? 'none' : 'block';
+        pauseIcon.style.display = isPlaying ? 'block' : 'none';
+      }
+
+      btnPlay.addEventListener('click', togglePlay);
+      window.addEventListener('keydown', e => {
+        if (e.code === 'Space') {
+          e.preventDefault();
+          togglePlay();
+        }
+      });
+
+      // Restart
+      document.getElementById('btnRestart').addEventListener('click', () => {
+        currentTime = 0.0;
+        isPlaying = true;
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+      });
+
+      // Speed Toggle (1.0x -> 1.5x -> 2.0x -> 0.5x -> 1.0x)
+      const btnSpeed = document.getElementById('btnSpeed');
+      const speeds = [1.0, 1.5, 2.0, 0.5];
+      let speedIdx = 0;
+      btnSpeed.addEventListener('click', () => {
+        speedIdx = (speedIdx + 1) % speeds.length;
+        playbackSpeed = speeds[speedIdx];
+        btnSpeed.innerText = `${playbackSpeed.toFixed(1)}x`;
+      });
+
+      // Timeline Scrubber Click & Drag
+      const trackContainer = document.getElementById('timelineTrackContainer');
+      let isDragging = false;
+
+      function seekTimeline(e) {
+        const rect = trackContainer.getBoundingClientRect();
+        const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+        const fraction = clickX / rect.width;
+        currentTime = fraction * TOTAL_DURATION;
+        evaluateTimeline(currentTime);
+      }
+
+      trackContainer.addEventListener('mousedown', e => {
+        isDragging = true;
+        seekTimeline(e);
+      });
+      window.addEventListener('mousemove', e => {
+        if (isDragging) seekTimeline(e);
+      });
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+
+      // Scene Quick Jump Tabs
+      document.querySelectorAll('.tab-scene').forEach(tab => {
+        tab.addEventListener('click', () => {
+          currentTime = parseFloat(tab.getAttribute('data-time'));
+          evaluateTimeline(currentTime);
+        });
+      });
+
+      // Camera Angle Preset Buttons
+      document.querySelectorAll('.btn-cam').forEach(btn => {
+        btn.addEventListener('click', () => {
+          setCameraPreset(btn.getAttribute('data-cam'));
+        });
+      });
+
+      // Manual Cutaway Slider
+      document.getElementById('cutawaySlider').addEventListener('input', e => {
+        const val = parseFloat(e.target.value) / 100;
+        setCutawayOpacity(val);
+      });
+
+      // Fullscreen Button
+      document.getElementById('btnToggleFullscreen').addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => alert(err.message));
+        } else {
+          document.exitFullscreen();
+        }
+      });
+
+      // Video Export Button
+      document.getElementById('btnExportVideo').addEventListener('click', startVideoRecording);
+      document.getElementById('btnCancelExport').addEventListener('click', cancelVideoRecording);
+    }
+
+    /* --------------------------------------------------------------------------
+       AUTOMATIC HD VIDEO EXPORT (PPT Slide 1 WebM / MP4)
+       -------------------------------------------------------------------------- */
+    function startVideoRecording() {
+      if (isRecording) return;
+      isRecording = true;
+
+      // Show Export Modal
+      const modal = document.getElementById('exportModal');
+      modal.style.display = 'flex';
+      document.getElementById('modalTitle').innerText = "Recording HD Presentation Video";
+      document.getElementById('modalDesc').innerText = "Generating smooth 60FPS 16:9 CAD animation (0.0s to 20.0s) for PowerPoint Slide 1...";
+
+      // Reset sequence to start
+      currentTime = 0.0;
+      isPlaying = true;
+      activeCameraMode = 'cinematic';
+      playbackSpeed = 1.0;
+
+      // Setup MediaRecorder from Canvas stream
+      const stream = renderer.domElement.captureStream(60); // 60 FPS
+      recordedChunks = [];
+
+      let mimeType = 'video/webm;codecs=vp9';
+      if (!MediaRecorder.isTypeSupported(mimeType)) {
+        mimeType = 'video/webm';
+      }
+
+      try {
+        mediaRecorder = new MediaRecorder(stream, {
+          mimeType: mimeType,
+          videoBitsPerSecond: 12000000 // 12 Mbps crystal clear 1080p
+        });
+      } catch (e) {
+        mediaRecorder = new MediaRecorder(stream);
+      }
+
+      mediaRecorder.ondataavailable = e => {
+        if (e.data && e.data.size > 0) {
+          recordedChunks.push(e.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'SIH26115_Medical_Waste_Robot_Demo.webm';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 100);
+
+        modal.style.display = 'none';
+        isRecording = false;
+      };
+
+      mediaRecorder.start();
+    }
+
+    function cancelVideoRecording() {
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+      }
+      document.getElementById('exportModal').style.display = 'none';
+      isRecording = false;
+    }
+
+    /* --------------------------------------------------------------------------
+       WINDOW RESIZE HANDLER
+       -------------------------------------------------------------------------- */
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    /* --------------------------------------------------------------------------
+       MAIN ANIMATION LOOP
+       -------------------------------------------------------------------------- */
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const delta = clock.getDelta();
+
+      if (isPlaying) {
+        currentTime += delta * playbackSpeed;
+
+        if (isRecording) {
+          const exportPct = (currentTime / TOTAL_DURATION) * 100;
+          document.getElementById('exportFill').style.width = `${Math.min(100, exportPct)}%`;
+        }
+
+        if (currentTime >= TOTAL_DURATION) {
+          if (isRecording) {
+            mediaRecorder.stop();
+          }
+          currentTime = 0.0; // Loop back
+        }
+
+        evaluateTimeline(currentTime);
+      }
+
+      TWEEN.update();
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    // Launch 3D Studio on DOM Load
+    window.addEventListener('DOMContentLoaded', init3D);
+  </script>
+</body>
+</html>

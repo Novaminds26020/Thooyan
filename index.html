@@ -1,0 +1,3384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVAMINDS — AI-Powered Autonomous Biomedical Waste Management Robot</title>
+  <meta name="description" content="A smart, battery-electric, autonomous robot that collects, identifies, sorts, and tracks biomedical waste while eliminating human exposure to hazardous hospital materials.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Three.js 3D Engine & OrbitControls for Hero Robot Showcase -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+  <!-- ==================== STICKY NAVBAR ==================== -->
+  <header class="site-header" id="header">
+    <div class="nav-container">
+      <a href="#hero" class="brand-logo" aria-label="NOVAMINDS Home">
+        <img src="assets/images/logo.png" alt="NOVAMINDS Logo" class="logo-img" onerror="this.classList.add('img-fallback')">
+        <span class="logo-text-fallback">NOVAMINDS</span>
+      </a>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primaryNav">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="primary-nav" id="primaryNav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="#hero" class="nav-link active">HOME</a></li>
+          <li><a href="#problem" class="nav-link">PROBLEM</a></li>
+          <li><a href="#solution" class="nav-link">SOLUTION</a></li>
+          <li><a href="#how-it-works" class="nav-link">HOW IT WORKS</a></li>
+          <li><a href="#unique" class="nav-link">UNIQUENESS</a></li>
+          <li><a href="#technology" class="nav-link">TECHNOLOGY</a></li>
+          <li><a href="#fusion" class="nav-link">CAD DESIGN</a></li>
+          <li><a href="#impact" class="nav-link">IMPACT</a></li>
+          <li><a href="#team" class="nav-link">TEAM</a></li>
+          <li><a href="#mentors" class="nav-link">MENTORS</a></li>
+          <li><a href="#references" class="nav-link">REFERENCES</a></li>
+        </ul>
+        <div class="nav-cta-wrapper">
+          <a href="#solution" class="btn btn-primary btn-sm nav-cta">EXPLORE SOLUTION</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="hero-section" id="hero">
+      <div class="hero-bg-glow"></div>
+      <div class="container hero-container">
+        <!-- Left Content -->
+        <div class="hero-content" data-reveal="fade-up">
+          <div class="badge hero-badge">
+            <span class="badge-dot"></span>
+            AI + ROBOTICS + HEALTHCARE
+          </div>
+          
+          <h1 class="hero-title">
+            SMART BIOMEDICAL<br>
+            WASTE MANAGEMENT
+            <span class="hero-title-highlight">AUTONOMOUS ROBOT</span>
+          </h1>
+
+          <p class="hero-description">
+            A smart, battery-electric, autonomous robot that collects, identifies, sorts, and tracks medical waste while reducing human exposure to risky biomedical waste handling.
+          </p>
+
+          <div class="hero-actions">
+            <a href="robot-3d-presentation.html" target="_blank" class="btn btn-primary" style="background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%); border:none; box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);">
+              <span>🎬 3D ANIMATED DEMO (SIH SLIDE 1)</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+            </a>
+            <a href="#solution" class="btn btn-secondary-outline">
+              <span>EXPLORE SOLUTION</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#how-it-works" class="btn btn-secondary-outline">
+              <span>HOW IT WORKS</span>
+            </a>
+          </div>
+
+          <!-- Hero Quick Stats / Highlights -->
+          <div class="hero-highlights">
+            <div class="highlight-item">
+              <span class="highlight-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </span>
+              <div>
+                <strong>Zero Direct Exposure</strong>
+                <p>Protected staff & sanitation crew</p>
+              </div>
+            </div>
+            <div class="highlight-item">
+              <span class="highlight-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </span>
+              <div>
+                <strong>2x Daily Ward Rounds</strong>
+                <p>Fully autonomous lift navigation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Robot Showcase / Interactive 3D Engineering Visualization -->
+        <div class="hero-visual" data-reveal="fade-left">
+          <div class="robot-card-frame">
+            <div class="robot-hud-container" id="heroRobotContainer">
+              
+              <!-- Top Left Live HUD Mode Badge -->
+              <div class="hud-badge hud-top-left" id="heroHudModeBadge">
+                <span class="hud-pulse pulse-cyan"></span>
+                <div class="hud-text">
+                  <small id="heroHudSmall">ROBOT SHOWCASE</small>
+                  <strong id="heroHudTitle">360° Turntable CAD View</strong>
+                </div>
+              </div>
+
+              <!-- Top Right Interactive View Controls -->
+              <div class="hud-badge hud-top-right hero-3d-controls" style="cursor: default; pointer-events: auto;">
+                <button type="button" class="btn-hero-3d-action" id="btnToggleHeroCutaway" title="Toggle CAD Cutaway View">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                  <span id="btnCutawayLabel">🔬 Cutaway View</span>
+                </button>
+                <button type="button" class="btn-hero-3d-action" id="btnResetHeroCam" title="Reset Camera View">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                </button>
+              </div>
+
+              <!-- Live AI Scanning & Sorting Overlay Badge -->
+              <div class="hero-ai-scan-overlay" id="heroAiScanOverlay">
+                <div class="ai-scan-reticle" id="aiScanReticle"></div>
+                <div class="ai-scan-status-pill" id="aiScanPill">
+                  <span class="scan-pill-dot"></span>
+                  <span id="aiScanText">AI SCANNING...</span>
+                </div>
+              </div>
+
+              <!-- 3D Three.js WebGL Canvas Canvas Mount Frame -->
+              <div class="image-wrapper hero-img-box hero-3d-canvas-wrapper" id="hero3dCanvasWrapper" style="background: radial-gradient(circle at 50% 50%, #0d1b2e 0%, #060a12 100%); cursor: grab;">
+                <canvas id="heroRobotCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+                <!-- Subtle Radial Glow Behind Robot -->
+                <div class="hero-robot-glow-backdrop"></div>
+              </div>
+
+              <!-- Bottom Flow Sequence Breadcrumb Bar -->
+              <div class="hero-flow-breadcrumb-bar">
+                <div class="flow-step-item active" id="stepHopper">
+                  <span class="step-dot"></span>
+                  <span class="step-label">INTAKE</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step-item" id="stepConveyor">
+                  <span class="step-dot"></span>
+                  <span class="step-label">CONVEYOR</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step-item" id="stepAiScan">
+                  <span class="step-dot"></span>
+                  <span class="step-label">AI SCAN</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step-item" id="stepRoboticArm">
+                  <span class="step-dot"></span>
+                  <span class="step-label">ROBOTIC SORT</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step-item" id="stepChute">
+                  <span class="step-dot"></span>
+                  <span class="step-label">CHUTES</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step-item" id="stepSealedBins">
+                  <span class="step-dot"></span>
+                  <span class="step-label">SEALED BINS</span>
+                </div>
+              </div>
+
+              <!-- 4-Stream Category Legend Pills (Bottom-left of card) -->
+              <div class="hud-badge hud-bottom-left" style="padding: 6px 10px; gap: 8px;">
+                <div class="hero-cat-pill yellow active" title="Yellow: Infectious / Pathological Waste">🟡 Infectious</div>
+                <div class="hero-cat-pill red" title="Red: Contaminated Plastics">🔴 Plastics</div>
+                <div class="hero-cat-pill white" title="White: Sharps Container">⚪ Sharps</div>
+                <div class="hero-cat-pill blue" title="Blue: Glass & Pharmaceutical">🔵 Glass</div>
+              </div>
+
+              <!-- Bottom Right Telemetry Indicator -->
+              <div class="hud-badge hud-bottom-right" id="heroNavBadge">
+                <span class="hud-pulse pulse-green"></span>
+                <div class="hud-text">
+                  <small>AUTONOMOUS</small>
+                  <strong>LiDAR Active</strong>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROBLEM IDENTIFIED SECTION ==================== -->
+    <section class="section problem-intro-section" id="problem">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">CURRENT HEALTHCARE CHALLENGE</span>
+          <h2 class="section-title">PROBLEM WE IDENTIFIED</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="two-col-grid align-center">
+          <!-- Text column -->
+          <div class="col-text" data-reveal="fade-right">
+            <div class="intro-statement-card">
+              <div class="statement-icon">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <p class="intro-lead-text">
+                Hospitals produce a lot of biomedical waste every day, and it is collected and sorted by hand.
+              </p>
+            </div>
+
+            <ul class="problem-list">
+              <li class="problem-list-item">
+                <span class="item-bullet danger"></span>
+                <div>
+                  <strong>Infection & Sharps Hazards</strong>
+                  <p>Staff and sanitation workers can get infected from sharps, blood-soaked items and infectious waste.</p>
+                </div>
+              </li>
+              <li class="problem-list-item">
+                <span class="item-bullet warning"></span>
+                <div>
+                  <strong>Human Error & Mixing</strong>
+                  <p>Different types of waste get mixed up because of human mistakes, tiredness or lack of time.</p>
+                </div>
+              </li>
+              <li class="problem-list-item">
+                <span class="item-bullet neutral"></span>
+                <div>
+                  <strong>Traceability & Compliance Gaps</strong>
+                  <p>It is hard to keep a proper record and follow the waste disposal rules accurately across busy hospital wards.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 3D Interactive Problem Demonstration Column -->
+          <div class="col-image" data-reveal="fade-left">
+            <div class="problem-3d-wrapper" id="problem3dWrapper">
+              <!-- Top HUD Status Bar -->
+              <div class="problem-3d-hud">
+                <div class="problem-hud-left">
+                  <span class="problem-hud-badge" id="problemStageBadge">
+                    <span class="problem-pulse-dot"></span>
+                    <span id="problemStageBadgeText">01 INFECTION RISK</span>
+                  </span>
+                  <span class="problem-hud-sub" id="problemStageSub">MANUAL HANDLING HAZARD</span>
+                </div>
+                <div class="problem-hud-right">
+                  <span class="problem-live-tag">LIVE SIMULATION</span>
+                </div>
+              </div>
+
+              <!-- Three.js Canvas Container -->
+              <div class="problem-canvas-container" id="problemCanvasContainer">
+                <canvas id="problem3dCanvas"></canvas>
+                
+                <!-- Dynamic Floating 3D HUD Callout Overlay -->
+                <div class="problem-floating-callout" id="problemFloatingCallout">
+                  <div class="callout-icon" id="calloutIcon">⚠️</div>
+                  <div class="callout-text-group">
+                    <div class="callout-title" id="calloutTitle">INFECTION RISK</div>
+                    <div class="callout-sub" id="calloutSub">Direct human exposure to sharps &amp; infectious items</div>
+                  </div>
+                </div>
+
+                <!-- Timeline Progress Bar -->
+                <div class="problem-timeline-bar">
+                  <div class="problem-timeline-fill" id="problemTimelineFill"></div>
+                </div>
+              </div>
+
+              <!-- Interactive Controls & Problem Selector Tabs -->
+              <div class="problem-3d-controls">
+                <div class="problem-stage-tabs" role="tablist">
+                  <button type="button" class="problem-tab-btn active" data-stage="1" id="problemTab1" role="tab" aria-selected="true">
+                    <span class="tab-num">01</span>
+                    <span class="tab-label">INFECTION RISK</span>
+                  </button>
+                  <button type="button" class="problem-tab-btn" data-stage="2" id="problemTab2" role="tab" aria-selected="false">
+                    <span class="tab-num">02</span>
+                    <span class="tab-label">HUMAN ERROR</span>
+                  </button>
+                  <button type="button" class="problem-tab-btn" data-stage="3" id="problemTab3" role="tab" aria-selected="false">
+                    <span class="tab-num">03</span>
+                    <span class="tab-label">TRACEABILITY</span>
+                  </button>
+                </div>
+
+                <div class="problem-action-btns">
+                  <button type="button" class="problem-btn-action" id="problemBtnPlayPause" title="Play or Pause Animation">
+                    <svg id="problemPlayIcon" class="btn-icon" style="display:none;" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <svg id="problemPauseIcon" class="btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    <span id="problemPlayPauseText">PAUSE</span>
+                  </button>
+                  <button type="button" class="problem-btn-action" id="problemBtnReset" title="Reset Animation to Beginning">
+                    <svg class="btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>RESET</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== THE CHALLENGE CARDS ==================== -->
+    <section class="section challenge-cards-section bg-light">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">KEY RISK FACTORS</span>
+          <h2 class="section-title">THE CHALLENGE</h2>
+          <p class="section-subtitle">Critical bottlenecks in conventional hospital biomedical waste workflows</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="grid-4-col">
+          <!-- Card 01 -->
+          <div class="challenge-card" data-reveal="fade-up" data-delay="100">
+            <div class="challenge-num">01</div>
+            <div class="challenge-icon-box">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+            </div>
+            <h3 class="challenge-title">Human Exposure</h3>
+            <p class="challenge-desc">Staff and sanitation workers may come into contact with sharps, blood-soaked items and infectious waste.</p>
+          </div>
+
+          <!-- Card 02 -->
+          <div class="challenge-card" data-reveal="fade-up" data-delay="200">
+            <div class="challenge-num">02</div>
+            <div class="challenge-icon-box">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+            <h3 class="challenge-title">Waste Mixing</h3>
+            <p class="challenge-desc">Different waste types can get mixed because of human mistakes, tiredness or lack of time.</p>
+          </div>
+
+          <!-- Card 03 -->
+          <div class="challenge-card" data-reveal="fade-up" data-delay="300">
+            <div class="challenge-num">03</div>
+            <div class="challenge-icon-box">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <h3 class="challenge-title">Manual Sorting</h3>
+            <p class="challenge-desc">Biomedical waste is collected and sorted manually, posing recurring operational and health risks.</p>
+          </div>
+
+          <!-- Card 04 -->
+          <div class="challenge-card" data-reveal="fade-up" data-delay="400">
+            <div class="challenge-num">04</div>
+            <div class="challenge-icon-box">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+            </div>
+            <h3 class="challenge-title">Limited Traceability</h3>
+            <p class="challenge-desc">It is difficult to maintain proper records and follow waste disposal rules consistently without automation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== OUR SOLUTION (3D INTERACTIVE PRODUCT DEMO) ==================== -->
+    <section class="section solution-section" id="solution">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">NOVAMINDS INNOVATION SHOWCASE</span>
+          <h2 class="section-title">OUR PROPOSED SOLUTION</h2>
+          <p class="section-subtitle">Interactive 3D demonstration of our autonomous biomedical waste collection & segregation robotics system</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <!-- Master Interactive 3D Product Demonstration Console -->
+        <div class="solution-3d-console" id="solution3dContainer">
+
+          <!-- 3D Viewport with Overlays -->
+          <div class="solution-3d-viewport" id="solutionViewport">
+            <canvas id="solutionRobotCanvas"></canvas>
+
+            <!-- Top Cinematic HUD -->
+            <div class="sol-hud-top">
+              <div class="sol-stage-pill" id="solStagePill">
+                <span class="sol-pulse-dot"></span>
+                <span id="solStagePillText">INTRODUCTION</span>
+              </div>
+              <div class="sol-hud-title-box">
+                <span class="sol-innovation-tag" id="solInnovationTag">INNOVATION ARCHITECTURE</span>
+                <h3 class="sol-hud-headline" id="solHeadline">Smart Mobile Medical-Waste Collection & Segregation Robot</h3>
+                <p class="sol-hud-desc" id="solDesc">Autonomous collection, intelligent identification, robotic segregation and digital tracking.</p>
+              </div>
+            </div>
+
+            <!-- Top Right: Camera Angles Selector -->
+            <div class="sol-cam-controls">
+              <button class="btn-sol-cam active" data-cam="cinematic" title="Cinematic Dynamic Camera">
+                <span>Cinematic</span>
+              </button>
+              <button class="btn-sol-cam" data-cam="corridor" title="Corridor Navigation View">
+                <span>Corridor</span>
+              </button>
+              <button class="btn-sol-cam" data-cam="cutaway" title="Internal CAD Cutaway View">
+                <span>Cutaway</span>
+              </button>
+              <button class="btn-sol-cam" data-cam="deck" title="Top Sorting Deck View">
+                <span>Sorting Deck</span>
+              </button>
+              <button class="btn-sol-cam" data-cam="dock" title="Central Station & Dock View">
+                <span>Dock</span>
+              </button>
+            </div>
+
+            <!-- Left HUD: Live Telemetry & Status Diagnostics -->
+            <div class="sol-telemetry-panel" id="solTelemetry">
+              <div class="sol-tel-header">
+                <span class="sol-tel-dot"></span>
+                <span>ROBOT TELEMETRY</span>
+                <span class="sol-tel-badge" id="solTelState">INTRO</span>
+              </div>
+              <div class="sol-tel-grid">
+                <div class="sol-tel-row">
+                  <span class="sol-tel-label">Mobility State:</span>
+                  <span class="sol-tel-val" id="solTelNav">Stationary Standby</span>
+                </div>
+                <div class="sol-tel-row">
+                  <span class="sol-tel-label">Authorization:</span>
+                  <span class="sol-tel-val" id="solTelAuth" style="color: #94a3b8;">STANDBY</span>
+                </div>
+                <div class="sol-tel-row">
+                  <span class="sol-tel-label">AI Engine:</span>
+                  <span class="sol-tel-val" id="solTelAi">YOLO-BioMed v9 Ready</span>
+                </div>
+                <div class="sol-tel-row">
+                  <span class="sol-tel-label">Robotic Arms:</span>
+                  <span class="sol-tel-val" id="solTelArm">Standby / Calibrated</span>
+                </div>
+                <div class="sol-tel-row sol-battery-item">
+                  <div class="sol-battery-hdr">
+                    <span class="sol-tel-label">Battery Level:</span>
+                    <span class="sol-tel-val" id="solTelBatteryVal" style="color: #10b981;">96%</span>
+                  </div>
+                  <div class="sol-battery-track">
+                    <div class="sol-battery-fill" id="solTelBatteryBar" style="width: 96%; background-color: #10b981;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4 Waste Categories Active Indicator -->
+              <div class="sol-categories-legend">
+                <div class="sol-wcat-item" data-cat="yellow">
+                  <span class="sol-wcat-dot yellow"></span>
+                  <span>Yellow: Infectious</span>
+                </div>
+                <div class="sol-wcat-item" data-cat="red">
+                  <span class="sol-wcat-dot red"></span>
+                  <span>Red: Plastics</span>
+                </div>
+                <div class="sol-wcat-item" data-cat="white">
+                  <span class="sol-wcat-dot white"></span>
+                  <span>White: Sharps</span>
+                </div>
+                <div class="sol-wcat-item" data-cat="blue">
+                  <span class="sol-wcat-dot blue"></span>
+                  <span>Blue: Glass/Pharma</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Holographic Digital Tracking Overlay (Scene 6) -->
+            <div class="sol-tracking-overlay" id="solTrackingOverlay">
+              <div class="sol-track-hdr">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d2ff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>HOSPITAL CLOUD EMR SYNC</span>
+              </div>
+              <div class="sol-track-stat">
+                <span>Ward Location:</span>
+                <span>Ward 3B &bull; Oncology</span>
+              </div>
+              <div class="sol-track-stat">
+                <span>Logged Weight:</span>
+                <span>14.2 kg (4 Streams)</span>
+              </div>
+              <div class="sol-track-stat">
+                <span>Timestamp:</span>
+                <span>14:32:05 &bull; Real-time</span>
+              </div>
+              <div class="sol-track-stat">
+                <span>Cryptographic Hash:</span>
+                <span>0x8F94...B7E2</span>
+              </div>
+              <div class="sol-cpcb-badge">
+                CPCB COMPLIANCE VERIFIED
+              </div>
+            </div>
+
+            <!-- AI Scanner Reticle (Scene 4) -->
+            <div class="sol-ai-reticle" id="solAiReticle">
+              <div class="ai-reticle-box">
+                <div class="reticle-corner tl"></div>
+                <div class="reticle-corner tr"></div>
+                <div class="reticle-corner bl"></div>
+                <div class="reticle-corner br"></div>
+                <div class="ai-scan-laser-line"></div>
+                <div class="ai-detected-tag">YOLO-BioMed: YELLOW INFECTIOUS (99.4%)</div>
+              </div>
+            </div>
+
+            <!-- Viewport Hint -->
+            <div class="sol-viewport-hint">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6m0 0l-7 7m7-7L10 14M9 21H3v-6m0 0l7-7m-7 7l11-11"/></svg>
+              <span>Click & Drag to Rotate 3D Demonstration &bull; Scroll to Zoom</span>
+            </div>
+          </div>
+
+          <!-- Master Control Toolbar -->
+          <div class="solution-controls-bar">
+            <!-- Playback Control Cluster -->
+            <div class="sol-controls-cluster">
+              <button class="btn-sol-ctrl" id="solBtnPrev" title="Previous Innovation Step">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                <span>Prev</span>
+              </button>
+
+              <button class="btn-sol-ctrl btn-sol-play" id="solBtnPlayPause" title="Play / Pause Demo">
+                <svg id="solIconPlay" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="solIconPause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                <span id="solTextPlayPause">Pause</span>
+              </button>
+
+              <button class="btn-sol-ctrl" id="solBtnNext" title="Next Innovation Step">
+                <span>Next</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+              </button>
+
+              <button class="btn-sol-ctrl" id="solBtnRestart" title="Restart to Scene 1">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                <span>Restart</span>
+              </button>
+
+              <button class="btn-sol-ctrl" id="solBtnResetView" title="Reset Camera View">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+                <span>Reset View</span>
+              </button>
+            </div>
+
+            <!-- View Toggles & Speed -->
+            <div class="sol-controls-cluster">
+              <button class="btn-sol-toggle" id="solBtnCutaway" title="Toggle Internal CAD Cutaway View">
+                <span class="sol-toggle-dot"></span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <span>CAD Cutaway</span>
+              </button>
+
+              <button class="btn-sol-ctrl" id="solBtnSpeed" title="Playback Speed">
+                <span id="solSpeedText">1.0x</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 8-Scene Timeline Navigation Dock -->
+          <div class="solution-timeline-dock">
+            <!-- Progress Track -->
+            <div class="sol-timeline-bar-wrap" id="solTimelineBar" title="Click or drag to scrub timeline">
+              <div class="sol-timeline-track">
+                <div class="sol-timeline-fill" id="solTimelineFill" style="width: 12.5%;"></div>
+                <div class="sol-timeline-handle" id="solTimelineHandle" style="left: 12.5%;"></div>
+              </div>
+            </div>
+
+            <!-- 8 Scene Quick Tabs -->
+            <div class="sol-scenes-grid">
+              <div class="sol-scene-tab active" data-scene="0">
+                <div class="sol-scene-num">00</div>
+                <h4 class="sol-scene-name">Introduction</h4>
+                <p class="sol-scene-desc">Compact hospital-ready robot.</p>
+              </div>
+
+              <div class="sol-scene-tab" data-scene="1">
+                <div class="sol-scene-num">01</div>
+                <h4 class="sol-scene-name">Ward Rounds</h4>
+                <p class="sol-scene-desc">Autonomous scheduled transit.</p>
+              </div>
+
+              <div class="sol-scene-tab" data-scene="2">
+                <div class="sol-scene-num">02</div>
+                <h4 class="sol-scene-name">Staff Auth</h4>
+                <p class="sol-scene-desc">NFC/RFID badge tap verification.</p>
+              </div>
+
+              <div class="sol-scene-tab" data-scene="3">
+                <div class="sol-scene-num">03</div>
+                <h4 class="sol-scene-name">Common Bin</h4>
+                <p class="sol-scene-desc">Zero extra staff training required.</p>
+              </div>
+
+              <div class="sol-scene-tab" data-scene="4">
+                <div class="sol-scene-num">04</div>
+                <h4 class="sol-scene-name">AI & Robotics</h4>
+                <p class="sol-scene-desc">99.4% YOLO-BioMed classification.</p>
+              </div>
+
+              <div class="sol-scene-tab" data-scene="5">
+                <div class="sol-scene-num">05</div>
+                <h4 class="sol-scene-name">Sealed Bins</h4>
+                <p class="sol-scene-desc">4 hermetic tanks with UV-C.</p>
+              </div>
+
+              <div class="sol-scene-tab" data-scene="6">
+                <div class="sol-scene-num">06</div>
+                <h4 class="sol-scene-name">Tracking</h4>
+                <p class="sol-scene-desc">Cloud EMR & CPCB audit logging.</p>
+              </div>
+
+              <div class="sol-scene-tab" data-scene="7">
+                <div class="sol-scene-num">07</div>
+                <h4 class="sol-scene-name">Dump & Charge</h4>
+                <p class="sol-scene-desc">Autonomous disposal & wireless dock.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 4 Core Innovation Pillars Grid -->
+        <div class="solution-pillars-bar" data-reveal="fade-up">
+          <div class="sol-pillar-card">
+            <div class="sol-pillar-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <h4 class="sol-pillar-title">Zero Human Exposure</h4>
+              <p class="sol-pillar-desc">Completely takes healthcare workers out of risky, biohazardous handling operations.</p>
+            </div>
+          </div>
+
+          <div class="sol-pillar-card">
+            <div class="sol-pillar-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div>
+              <h4 class="sol-pillar-title">No Extra Staff Training</h4>
+              <p class="sol-pillar-desc">Nurses and doctors continue using one common bin in each ward as usual with zero friction.</p>
+            </div>
+          </div>
+
+          <div class="sol-pillar-card">
+            <div class="sol-pillar-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <h4 class="sol-pillar-title">99.4% AI Vision Precision</h4>
+              <p class="sol-pillar-desc">YOLO-BioMed computer vision and dual robotic arms segregate into 4 regulatory BMW streams.</p>
+            </div>
+          </div>
+
+          <div class="sol-pillar-card">
+            <div class="sol-pillar-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div>
+              <h4 class="sol-pillar-title">100% Digital Traceability</h4>
+              <p class="sol-pillar-desc">Automated weight and category logging per ward provides a tamper-proof audit trail for CPCB compliance.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== HOW OUR ROBOT WORKS (3D INTERACTIVE WORKFLOW) ==================== -->
+    <section class="section how-it-works-section" id="how-it-works">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">3D DIGITAL TWIN & SIMULATION</span>
+          <h2 class="section-title">HOW OUR ROBOT WORKS</h2>
+          <p class="section-subtitle">Interactive 3D simulation of the end-to-end 8-stage autonomous biomedical waste lifecycle</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <!-- Master Interactive 3D Workflow Simulator Container -->
+        <div class="workflow-3d-container" id="workflow3dContainer">
+
+          <!-- Viewport with 3D Canvas and Overlays -->
+          <div class="workflow-3d-viewport" id="workflowViewport">
+            <canvas id="workflow3dCanvas"></canvas>
+
+            <!-- Top HUD: Dynamic Stage Header & Status -->
+            <div class="workflow-hud-top">
+              <div class="workflow-stage-pill" id="workflowStagePill">
+                <span class="stage-pulse"></span>
+                <span id="workflowStagePillText">STAGE 01 / 08 • WARD ROUNDS</span>
+              </div>
+              <div class="workflow-hud-title-box">
+                <h3 class="workflow-hud-headline" id="workflowHeadline">1. Ward Rounds</h3>
+                <p class="workflow-hud-desc" id="workflowDesc">The differential-drive robot navigates hospital corridors twice daily and communicates with smart elevators for multi-floor transit.</p>
+              </div>
+            </div>
+
+            <!-- Top Right: Camera Angles Selector -->
+            <div class="workflow-cam-presets">
+              <button class="btn-cam-preset active" data-view="default" title="Isometric Perspective View">
+                <span>Isometric</span>
+              </button>
+              <button class="btn-cam-preset" data-view="cutaway" title="Side Cutaway View">
+                <span>Cutaway</span>
+              </button>
+              <button class="btn-cam-preset" data-view="top" title="Top Conveyor View">
+                <span>Top Conveyor</span>
+              </button>
+              <button class="btn-cam-preset" data-view="chutes" title="Chutes & Bins View">
+                <span>Chutes & Bins</span>
+              </button>
+            </div>
+
+            <!-- Left HUD: Real-time Telemetry & Category Diagnostics -->
+            <div class="workflow-telemetry-panel" id="workflowTelemetry">
+              <div class="telemetry-box-header">
+                <span class="telemetry-indicator-dot"></span>
+                <span>ROBOT TELEMETRY</span>
+                <span class="telemetry-status-badge" id="telemetryState">ACTIVE</span>
+              </div>
+              <div class="telemetry-stats-grid">
+                <div class="tel-stat-item">
+                  <span class="tel-stat-lbl">Action State:</span>
+                  <span class="tel-stat-val" id="telAction">Corridor SLAM Navigation</span>
+                </div>
+                <div class="tel-stat-item">
+                  <span class="tel-stat-lbl">Sensors:</span>
+                  <span class="tel-stat-val" id="telSensors">360° LiDAR + Sonar + IMU</span>
+                </div>
+                <div class="tel-stat-item">
+                  <span class="tel-stat-lbl">AI Vision:</span>
+                  <span class="tel-stat-val" id="telAi">YOLO-BioMed v9 (99.4%)</span>
+                </div>
+                <div class="tel-stat-item">
+                  <span class="tel-stat-lbl">Robotics:</span>
+                  <span class="tel-stat-val" id="telArmState">Standby / Locked</span>
+                </div>
+                <div class="tel-stat-item battery-stat-item">
+                  <div class="tel-battery-header">
+                    <span class="tel-stat-lbl">Battery:</span>
+                    <span class="tel-stat-val" id="telBatteryVal" style="color: #10b981;">94%</span>
+                  </div>
+                  <div class="battery-bar-track">
+                    <div class="battery-bar-fill" id="telBatteryBar" style="width: 94%; background-color: #10b981;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4 Waste Categories Active Indicator -->
+              <div class="workflow-categories-legend">
+                <div class="wcat-item" id="wcatYellow" data-cat="yellow">
+                  <span class="wcat-dot yellow"></span>
+                  <span>Yellow: Infectious</span>
+                </div>
+                <div class="wcat-item" id="wcatRed" data-cat="red">
+                  <span class="wcat-dot red"></span>
+                  <span>Red: Plastics</span>
+                </div>
+                <div class="wcat-item" id="wcatWhite" data-cat="white">
+                  <span class="wcat-dot white"></span>
+                  <span>White: Sharps</span>
+                </div>
+                <div class="wcat-item" id="wcatBlue" data-cat="blue">
+                  <span class="wcat-dot blue"></span>
+                  <span>Blue: Glass/Pharma</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Target HUD Reticle (Shown on Stage 5) -->
+            <div class="workflow-ai-reticle" id="aiScanReticle">
+              <div class="ai-reticle-box">
+                <div class="reticle-corner tl"></div>
+                <div class="reticle-corner tr"></div>
+                <div class="reticle-corner bl"></div>
+                <div class="reticle-corner br"></div>
+                <div class="ai-scan-laser-line"></div>
+                <div class="ai-detected-tag" id="aiDetectedTag">AI IDENTIFIED: YELLOW INFECTIOUS (99.4%)</div>
+              </div>
+            </div>
+
+            <!-- Interactive 3D Cutaway Component Annotation Pins (Toggled by Show/Hide Labels) -->
+            <div class="workflow-labels-overlay" id="workflowLabelsOverlay">
+              <div class="component-pin" id="pinHopper" style="display: none;">
+                <span class="pin-dot"></span>
+                <span class="pin-tag">Hopper (Intake & Metering)</span>
+              </div>
+              <div class="component-pin" id="pinConveyor" style="display: none;">
+                <span class="pin-dot"></span>
+                <span class="pin-tag">Controlled Conveyor</span>
+              </div>
+              <div class="component-pin" id="pinAiCam" style="display: none;">
+                <span class="pin-dot"></span>
+                <span class="pin-tag">AI Camera Gantry (Dual Vision)</span>
+              </div>
+              <div class="component-pin" id="pinArms" style="display: none;">
+                <span class="pin-dot"></span>
+                <span class="pin-tag">Robotic Sorting Arms</span>
+              </div>
+              <div class="component-pin" id="pinChutes" style="display: none;">
+                <span class="pin-dot"></span>
+                <span class="pin-tag">4× Gravity Chutes</span>
+              </div>
+              <div class="component-pin" id="pinBins" style="display: none;">
+                <span class="pin-dot"></span>
+                <span class="pin-tag">4× Sealed Compartments + UV-C</span>
+              </div>
+              <div class="component-pin" id="pinBattery" style="display: none;">
+                <span class="pin-dot"></span>
+                <span class="pin-tag">Battery & BMS Electronics</span>
+              </div>
+            </div>
+
+            <!-- Viewport Hint / Interaction helper -->
+            <div class="workflow-viewport-hint">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6m0 0l-7 7m7-7L10 14M9 21H3v-6m0 0l7-7m-7 7l11-11"/></svg>
+              <span>Click & Drag to Rotate 3D View &bull; Scroll to Zoom</span>
+            </div>
+          </div>
+
+          <!-- Master Control Toolbar -->
+          <div class="workflow-controls-bar">
+            <!-- Playback Control Cluster -->
+            <div class="controls-cluster primary-controls">
+              <button class="btn-workflow-ctrl" id="btnPrevStage" title="Previous Stage (Left Arrow)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                <span>Prev</span>
+              </button>
+
+              <button class="btn-workflow-ctrl btn-play-main" id="btnPlayPause" title="Play / Pause Workflow (Space)">
+                <svg id="iconPlay" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="iconPause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                <span id="textPlayPause">Pause</span>
+              </button>
+
+              <button class="btn-workflow-ctrl" id="btnNextStage" title="Next Stage (Right Arrow)">
+                <span>Next</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+              </button>
+
+              <button class="btn-workflow-ctrl" id="btnRestart" title="Restart to Stage 1 (R)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                <span>Restart</span>
+              </button>
+
+              <button class="btn-workflow-ctrl" id="btnResetView" title="Reset Camera View">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+                <span>Reset View</span>
+              </button>
+            </div>
+
+            <!-- View & Mode Toggles -->
+            <div class="controls-cluster toggle-controls">
+              <!-- Cutaway Mode Toggle -->
+              <button class="btn-workflow-toggle active" id="btnCutawayToggle" title="Toggle Transparent Cutaway Mode to see inside">
+                <span class="toggle-indicator"></span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <span>Cutaway Mode</span>
+              </button>
+
+              <!-- Show/Hide Labels Toggle -->
+              <button class="btn-workflow-toggle active" id="btnLabelsToggle" title="Show or hide internal component 3D callout labels">
+                <span class="toggle-indicator"></span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                <span>Labels</span>
+              </button>
+
+              <!-- Show/Hide Flow Toggle -->
+              <button class="btn-workflow-toggle active" id="btnFlowToggle" title="Show or hide animated waste flow pipeline particles">
+                <span class="toggle-indicator"></span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                <span>Flow</span>
+              </button>
+
+              <!-- Speed Selector -->
+              <button class="btn-workflow-ctrl btn-speed-chip" id="btnSpeedToggle" title="Change Simulation Speed">
+                <span id="speedValText">1.0x</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 8-Stage Timeline Navigation Dock -->
+          <div class="workflow-timeline-dock">
+            <!-- Continuous Progress Scrubber Track -->
+            <div class="timeline-bar-wrapper" id="workflowTimelineBar" title="Click or drag to scrub timeline">
+              <div class="timeline-bar-track">
+                <div class="timeline-bar-fill" id="workflowTimelineFill" style="width: 12.5%;"></div>
+                <div class="timeline-bar-handle" id="workflowTimelineHandle" style="left: 12.5%;"></div>
+              </div>
+            </div>
+
+            <!-- 8 Interactive Stage Cards / Nodes -->
+            <div class="workflow-stages-grid">
+              <!-- Stage 1 -->
+              <div class="wf-stage-card active" data-stage="1">
+                <div class="wf-stage-top">
+                  <div class="wf-stage-num">01</div>
+                  <span class="wf-stage-badge">TRANSIT</span>
+                </div>
+                <h4 class="wf-stage-name">Ward Rounds</h4>
+                <p class="wf-stage-desc">Navigates corridors & lifts on scheduled runs.</p>
+              </div>
+
+              <!-- Stage 2 -->
+              <div class="wf-stage-card" data-stage="2">
+                <div class="wf-stage-top">
+                  <div class="wf-stage-num">02</div>
+                  <span class="wf-stage-badge">SAFETY</span>
+                </div>
+                <h4 class="wf-stage-name">Acknowledgement</h4>
+                <p class="wf-stage-desc">NFC/RFID badge tap authentication before entry.</p>
+              </div>
+
+              <!-- Stage 3 -->
+              <div class="wf-stage-card" data-stage="3">
+                <div class="wf-stage-top">
+                  <div class="wf-stage-num">03</div>
+                  <span class="wf-stage-badge">INTAKE</span>
+                </div>
+                <h4 class="wf-stage-name">Waste Collection</h4>
+                <p class="wf-stage-desc">Automated door opens & receives ward waste safely.</p>
+              </div>
+
+              <!-- Stage 4 -->
+              <div class="wf-stage-card" data-stage="4">
+                <div class="wf-stage-top">
+                  <div class="wf-stage-num">04</div>
+                  <span class="wf-stage-badge">FEEDING</span>
+                </div>
+                <h4 class="wf-stage-name">Controlled Feeding</h4>
+                <p class="wf-stage-desc">Hopper meters items steadily onto internal conveyor.</p>
+              </div>
+
+              <!-- Stage 5 -->
+              <div class="wf-stage-card" data-stage="5">
+                <div class="wf-stage-top">
+                  <div class="wf-stage-num">05</div>
+                  <span class="wf-stage-badge">AI SCAN</span>
+                </div>
+                <h4 class="wf-stage-name">AI Identification</h4>
+                <p class="wf-stage-desc">Dual cameras scan & classify into 4 BMW streams.</p>
+              </div>
+
+              <!-- Stage 6 -->
+              <div class="wf-stage-card" data-stage="6">
+                <div class="wf-stage-top">
+                  <div class="wf-stage-num">06</div>
+                  <span class="wf-stage-badge">ROBOTICS</span>
+                </div>
+                <h4 class="wf-stage-name">Robotic Sorting</h4>
+                <p class="wf-stage-desc">Robotic arms pick items & drop into target chutes.</p>
+              </div>
+
+              <!-- Stage 7 -->
+              <div class="wf-stage-card" data-stage="7">
+                <div class="wf-stage-top">
+                  <div class="wf-stage-num">07</div>
+                  <span class="wf-stage-badge">STORAGE</span>
+                </div>
+                <h4 class="wf-stage-name">Sealed Compartments</h4>
+                <p class="wf-stage-desc">4 hermetic bins with UV-C continuous sterilization.</p>
+              </div>
+
+              <!-- Stage 8 -->
+              <div class="wf-stage-card" data-stage="8">
+                <div class="wf-stage-top">
+                  <div class="wf-stage-num">08</div>
+                  <span class="wf-stage-badge">COMPLETE</span>
+                </div>
+                <h4 class="wf-stage-name">Auto Dump & Charge</h4>
+                <p class="wf-stage-desc">Auto-dumps at main bins & docks for inductive recharge.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SYSTEM FLOW DIAGRAM ==================== -->
+    <section class="section flow-section" id="system-flow">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">ENGINEERING PIPELINE</span>
+          <h2 class="section-title">AUTONOMOUS WASTE MANAGEMENT FLOW</h2>
+          <p class="section-subtitle">Continuous mechanical and intelligent routing pipeline</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="flow-pipeline-container" data-reveal="fade-up">
+          <div class="flow-track">
+            <!-- Node 1 -->
+            <div class="flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              </div>
+              <span class="flow-label">WARD BIN</span>
+            </div>
+
+            <div class="flow-arrow-node">
+              <span class="flow-arrow">→</span>
+            </div>
+
+            <!-- Node 2 -->
+            <div class="flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+              </div>
+              <span class="flow-label">ROBOT COLLECTS</span>
+            </div>
+
+            <div class="flow-arrow-node">
+              <span class="flow-arrow">→</span>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              </div>
+              <span class="flow-label">HOPPER</span>
+            </div>
+
+            <div class="flow-arrow-node">
+              <span class="flow-arrow">→</span>
+            </div>
+
+            <!-- Node 4 -->
+            <div class="flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="20" height="8" rx="4"/><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
+              </div>
+              <span class="flow-label">SLOW CONVEYOR</span>
+            </div>
+
+            <div class="flow-arrow-node">
+              <span class="flow-arrow">→</span>
+            </div>
+
+            <!-- Node 5 -->
+            <div class="flow-node active-flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+              <span class="flow-label">AI CAMERA</span>
+            </div>
+
+            <div class="flow-arrow-node">
+              <span class="flow-arrow">→</span>
+            </div>
+
+            <!-- Node 6 -->
+            <div class="flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+              </div>
+              <span class="flow-label">2 ROBOTIC HANDS</span>
+            </div>
+
+            <div class="flow-arrow-node">
+              <span class="flow-arrow">→</span>
+            </div>
+
+            <!-- Node 7 -->
+            <div class="flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+              </div>
+              <span class="flow-label">GRAVITY CHUTES</span>
+            </div>
+
+            <div class="flow-arrow-node">
+              <span class="flow-arrow">→</span>
+            </div>
+
+            <!-- Node 8 -->
+            <div class="flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              </div>
+              <span class="flow-label">4 SEALED COMPARTMENTS</span>
+            </div>
+
+            <div class="flow-arrow-node">
+              <span class="flow-arrow">→</span>
+            </div>
+
+            <!-- Node 9 -->
+            <div class="flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </div>
+              <span class="flow-label">AUTO DUMP</span>
+            </div>
+
+            <div class="flow-arrow-node">
+              <span class="flow-arrow">→</span>
+            </div>
+
+            <!-- Node 10 -->
+            <div class="flow-node">
+              <div class="flow-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <span class="flow-label">AUTO CHARGE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WHAT MAKES OUR IDEA UNIQUE (3D INTERACTIVE DEMO) ==================== -->
+    <section class="section uniqueness-section" id="unique">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">KEY DIFFERENTIATORS & PRACTICAL ENGINEERING</span>
+          <h2 class="section-title">WHAT MAKES OUR IDEA UNIQUE?</h2>
+          <p class="section-subtitle">Five practical innovations designed for safer, simpler, and highly reliable hospital waste collection</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <!-- Master 3D Engineering Demonstration Console -->
+        <div class="unique-3d-console" id="unique3dContainer" data-reveal="fade-up">
+          
+          <!-- 3D Viewport with Overlays -->
+          <div class="unique-3d-viewport" id="uniqueViewport">
+            <canvas id="uniqueRobotCanvas"></canvas>
+
+            <!-- Top Cinematic HUD -->
+            <div class="unique-hud-top">
+              <div class="unique-stage-pill" id="uniqueStagePill">
+                <span class="unique-pulse-dot"></span>
+                <span id="uniqueStagePillText">00 — SYSTEM OVERVIEW</span>
+              </div>
+              <div class="unique-hud-title-box">
+                <span class="unique-innovation-tag" id="uniqueInnovationTag">INNOVATION ARCHITECTURE</span>
+                <h3 class="unique-hud-headline" id="uniqueHeadline">WHAT MAKES OUR IDEA UNIQUE?</h3>
+                <p class="unique-hud-desc" id="uniqueDesc">Five practical engineering innovations designed specifically for hospital realities.</p>
+              </div>
+            </div>
+
+            <!-- Contextual Dynamic Overlays for Innovations -->
+            
+            <!-- OVERLAY 01: Acknowledgement Before Entry -->
+            <div class="unique-dynamic-overlay" id="uniqueOverlayAuth">
+              <div class="unique-overlay-badge-hdr">
+                <span class="u-badge-icon">🔒</span>
+                <span class="u-badge-title">RESTRICTED WARD GATEKEEPER</span>
+              </div>
+              <div class="unique-auth-split">
+                <div class="auth-split-item without-auth">
+                  <div class="split-status-label">WITHOUT ACKNOWLEDGEMENT</div>
+                  <div class="split-status-val">HALT OUTSIDE OT</div>
+                  <p class="split-status-desc">Prevents entering during sterile surgeries or unauthorized procedures.</p>
+                </div>
+                <div class="auth-split-divider">➔</div>
+                <div class="auth-split-item with-auth">
+                  <div class="split-status-label">WITH ACKNOWLEDGEMENT</div>
+                  <div class="split-status-val">AUTHORIZED ENTRY</div>
+                  <p class="split-status-desc">Staff badge scan unlocks doors and permits safe entry.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- OVERLAY 02: Dedicated Re-Scan Spot -->
+            <div class="unique-dynamic-overlay" id="uniqueOverlayRescan">
+              <div class="unique-overlay-badge-hdr">
+                <span class="u-badge-icon">🎯</span>
+                <span class="u-badge-title">ZERO-GUESSING AI SORTING</span>
+              </div>
+              <div class="unique-rescan-flow">
+                <div class="rescan-step">
+                  <span class="r-step-num">1</span>
+                  <span class="r-step-text">FIRST SCAN</span>
+                </div>
+                <div class="rescan-arrow">➔</div>
+                <div class="rescan-step warning">
+                  <span class="r-step-num">2</span>
+                  <span class="r-step-text">LOW CONFIDENCE</span>
+                </div>
+                <div class="rescan-arrow">➔</div>
+                <div class="rescan-step active">
+                  <span class="r-step-num">3</span>
+                  <span class="r-step-text">RE-SCAN SPOT</span>
+                </div>
+                <div class="rescan-arrow">➔</div>
+                <div class="rescan-step success">
+                  <span class="r-step-num">4</span>
+                  <span class="r-step-text">CONFIRMED SORT</span>
+                </div>
+              </div>
+              <div class="unique-rescan-note">
+                <strong style="color: var(--accent);">Rule:</strong> Uncertain items are rechecked on a secondary plate instead of being randomly sorted into the wrong compartment.
+              </div>
+            </div>
+
+            <!-- OVERLAY 03: Emergency Priority Call Codes -->
+            <div class="unique-dynamic-overlay" id="uniqueOverlayEmergency">
+              <div class="unique-overlay-badge-hdr">
+                <span class="u-badge-icon">🚨</span>
+                <span class="u-badge-title">PRIORITY DISPATCH OVERRIDE</span>
+              </div>
+              <div class="unique-dispatch-card">
+                <div class="dispatch-code-box">
+                  <span class="dispatch-lbl">PRIORITY CALL CODE</span>
+                  <span class="dispatch-val">B4</span>
+                  <span class="dispatch-sub">Floor B • Room 4</span>
+                </div>
+                <div class="dispatch-routing-box">
+                  <div class="route-line-item old-route">
+                    <span class="route-dot gray"></span>
+                    <span>Scheduled Route: Ward A ➔ Ward C</span>
+                  </div>
+                  <div class="route-line-item new-route">
+                    <span class="route-dot red"></span>
+                    <span><strong>DYNAMIC OVERRIDE:</strong> Rerouting to B4</span>
+                  </div>
+                  <span class="dispatch-safety-tag">✓ Collision Avoidance Active</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- OVERLAY 04: Real-Time Digital Record -->
+            <div class="unique-dynamic-overlay" id="uniqueOverlayRecord">
+              <div class="unique-overlay-badge-hdr">
+                <span class="u-badge-icon">📋</span>
+                <span class="u-badge-title">CPCB DIGITAL AUDIT TRAIL</span>
+              </div>
+              <div class="unique-record-grid">
+                <div class="rec-field"><span class="rec-k">WARD ID:</span><span class="rec-v">B4 — OT-04</span></div>
+                <div class="rec-field"><span class="rec-k">TIMESTAMP:</span><span class="rec-v">15:32:04 IST</span></div>
+                <div class="rec-field"><span class="rec-k">CATEGORY:</span><span class="rec-v" style="color: #ef4444;">RED (Contaminated Plastic)</span></div>
+                <div class="rec-field"><span class="rec-k">NET WEIGHT:</span><span class="rec-v">420 g</span></div>
+                <div class="rec-field"><span class="rec-k">STAFF ID:</span><span class="rec-v">NS-402 (Verified)</span></div>
+                <div class="rec-field"><span class="rec-k">LEDGER HASH:</span><span class="rec-v" style="color: #00f5a0;">0x8F9C...2E14</span></div>
+              </div>
+            </div>
+
+            <!-- OVERLAY 05: Simple & Practical Design -->
+            <div class="unique-dynamic-overlay" id="uniqueOverlaySimple">
+              <div class="unique-overlay-badge-hdr">
+                <span class="u-badge-icon">⚙️</span>
+                <span class="u-badge-title">HIGH-UPTIME ENGINEERING</span>
+              </div>
+              <div class="unique-simple-pillars">
+                <div class="simple-pill"><span class="pill-check">✓</span> Flat-Floor Wheelbase (Zero stair gimmicks)</div>
+                <div class="simple-pill"><span class="pill-check">✓</span> Exactly 2 Articulated Arms (Low failure rate)</div>
+                <div class="simple-pill"><span class="pill-check">✓</span> Passive Gravity Chutes (Zero extra motors)</div>
+                <div class="simple-pill"><span class="pill-check">✓</span> Quick-Release Modular Sealed Compartments</div>
+              </div>
+            </div>
+
+            <!-- Bottom Floating Controls Toolbar -->
+            <div class="unique-controls-bar">
+              <div class="unique-ctrl-left">
+                <button class="btn-unique-ctrl" id="uniqueBtnRestart" title="Restart Demonstration">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                  <span>Restart</span>
+                </button>
+                <button class="btn-unique-ctrl" id="uniqueBtnPrev" title="Previous Innovation">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                  <span>Prev</span>
+                </button>
+                <button class="btn-unique-ctrl btn-unique-primary" id="uniqueBtnPlayPause" title="Play / Pause">
+                  <svg id="uniqueIconPlay" style="display:none;" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <svg id="uniqueIconPause" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                  <span id="uniqueTextPlayPause">PAUSE</span>
+                </button>
+                <button class="btn-unique-ctrl" id="uniqueBtnNext" title="Next Innovation">
+                  <span>Next</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+
+              <div class="unique-ctrl-right">
+                <button class="btn-unique-toggle active" id="uniqueBtnCutaway" title="Toggle Internal CAD Cutaway View">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                  <span>Cutaway</span>
+                </button>
+                <button class="btn-unique-toggle active" id="uniqueBtnLabels" title="Toggle 3D Annotation Labels">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                  <span>Labels</span>
+                </button>
+                <button class="btn-unique-toggle" id="uniqueBtnResetView" title="Reset Camera View">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                  <span>Reset View</span>
+                </button>
+                <button class="btn-unique-speed" id="uniqueBtnSpeed" title="Cycle Playback Speed">
+                  <span id="uniqueSpeedText">1x</span>
+                </button>
+              </div>
+            </div>
+
+          </div><!-- /unique-3d-viewport -->
+
+          <!-- 5-Innovation Timeline Bar & Jump Tabs -->
+          <div class="unique-timeline-dock">
+            <div class="unique-scrub-bar" id="uniqueScrubBar">
+              <div class="unique-scrub-fill" id="uniqueTimelineFill"></div>
+              <div class="unique-scrub-handle" id="uniqueTimelineHandle"></div>
+            </div>
+            
+            <div class="unique-scene-tabs">
+              <button class="unique-scene-tab active" data-stage="0">
+                <span class="tab-num">00</span>
+                <span class="tab-title">INTRO</span>
+              </button>
+              <button class="unique-scene-tab" data-stage="1">
+                <span class="tab-num">01</span>
+                <span class="tab-title">ACKNOWLEDGEMENT</span>
+              </button>
+              <button class="unique-scene-tab" data-stage="2">
+                <span class="tab-num">02</span>
+                <span class="tab-title">RE-SCAN SPOT</span>
+              </button>
+              <button class="unique-scene-tab" data-stage="3">
+                <span class="tab-num">03</span>
+                <span class="tab-title">EMERGENCY (B4)</span>
+              </button>
+              <button class="unique-scene-tab" data-stage="4">
+                <span class="tab-num">04</span>
+                <span class="tab-title">DIGITAL RECORD</span>
+              </button>
+              <button class="unique-scene-tab" data-stage="5">
+                <span class="tab-num">05</span>
+                <span class="tab-title">SIMPLE DESIGN</span>
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /unique-3d-console -->
+
+        <!-- Interactive Synced Innovation Cards Grid (Click to focus 3D Scene) -->
+        <div class="grid-3-col unique-companion-grid" data-reveal="fade-up">
+          <!-- Card 01 -->
+          <div class="unique-card unique-interactive-card" data-stage="1">
+            <div class="unique-badge">01</div>
+            <h3 class="unique-title">ACKNOWLEDGEMENT BEFORE ENTRY</h3>
+            <p class="unique-desc">
+              The robot halts outside sensitive areas like operation theatres during surgery, entering only upon verified staff badge confirmation.
+            </p>
+            <div class="card-focus-indicator">View in 3D ➔</div>
+          </div>
+
+          <!-- Card 02 -->
+          <div class="unique-card unique-interactive-card" data-stage="2">
+            <div class="unique-badge">02</div>
+            <h3 class="unique-title">RE-SCAN SPOT</h3>
+            <p class="unique-desc">
+              If AI confidence is low, items are never guessed. They are automatically transferred to a dedicated re-scan spot for multi-angle re-verification.
+            </p>
+            <div class="card-focus-indicator">View in 3D ➔</div>
+          </div>
+
+          <!-- Card 03 -->
+          <div class="unique-card unique-interactive-card" data-stage="3">
+            <div class="unique-badge">03</div>
+            <h3 class="unique-title">EMERGENCY CALL CODES</h3>
+            <p class="unique-desc">
+              Staff can send priority codes such as <strong>B4</strong> (Floor B, Room 4) and the robot safely overrides scheduled rounds to prioritize the emergency.
+            </p>
+            <div class="card-focus-indicator">View in 3D ➔</div>
+          </div>
+
+          <!-- Card 04 -->
+          <div class="unique-card unique-interactive-card" data-stage="4">
+            <div class="unique-badge">04</div>
+            <h3 class="unique-title">DIGITAL RECORD</h3>
+            <p class="unique-desc">
+              Every collection is logged in real-time with ward ID, item weight, waste color category, and timestamp for complete CPCB compliance.
+            </p>
+            <div class="card-focus-indicator">View in 3D ➔</div>
+          </div>
+
+          <!-- Card 05 -->
+          <div class="unique-card unique-interactive-card" data-stage="5">
+            <div class="unique-badge">05</div>
+            <h3 class="unique-title">SIMPLE & RELIABLE DESIGN</h3>
+            <p class="unique-desc">
+              Flat-floor mobility, exactly two articulated robotic hands, and passive gravity chutes maximize reliability, uptime, and ease of maintenance.
+            </p>
+            <div class="card-focus-indicator">View in 3D ➔</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== TECHNICAL APPROACH ==================== -->
+    <section class="section tech-approach-section" id="technology">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">COMPREHENSIVE ENGINEERING</span>
+          <h2 class="section-title">TECHNICAL APPROACH</h2>
+          <p class="section-subtitle">Integrating hardware, artificial intelligence, navigation, and tracking</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <!-- Four Major Areas Navigation Tabs -->
+        <div class="tech-tabs-nav" data-reveal="fade-up">
+          <button class="tech-tab-btn active" data-tab="hardware">1. HARDWARE</button>
+          <button class="tech-tab-btn" data-tab="ai-sorting">2. AI SORTING</button>
+          <button class="tech-tab-btn" data-tab="navigation">3. NAVIGATION</button>
+          <button class="tech-tab-btn" data-tab="tracking">4. TRACKING</button>
+        </div>
+
+        <!-- 1. HARDWARE CONTENT -->
+        <div class="tech-tab-pane active" id="tab-hardware">
+          <div class="grid-3-col">
+            <!-- 1. Mobile chassis -->
+            <div class="tech-hardware-card">
+              <div class="hardware-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="11" width="20" height="8" rx="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M4 11V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5"/></svg>
+              </div>
+              <h3 class="hardware-title">Mobile chassis</h3>
+              <p class="hardware-desc">Sturdy base platform built for smooth hospital hallway mobility, lift entry, and stable payload transport.</p>
+            </div>
+
+            <!-- 2. Collection box and hopper -->
+            <div class="tech-hardware-card">
+              <div class="hardware-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </div>
+              <h3 class="hardware-title">Collection box and hopper</h3>
+              <p class="hardware-desc">Enclosed intake receptacle that receives mixed ward waste directly from the ward bin.</p>
+            </div>
+
+            <!-- 3. Gate and slow conveyor -->
+            <div class="tech-hardware-card">
+              <div class="hardware-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="10" rx="3"/><line x1="7" y1="7" x2="7" y2="17"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="17" y1="7" x2="17" y2="17"/></svg>
+              </div>
+              <h3 class="hardware-title">Gate and slow conveyor</h3>
+              <p class="hardware-desc">Controlled metering gate releases items steadily onto a low-speed conveyor to avoid jamming.</p>
+            </div>
+
+            <!-- 4. AI camera -->
+            <div class="tech-hardware-card">
+              <div class="hardware-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+              <h3 class="hardware-title">AI camera</h3>
+              <p class="hardware-desc">Overhead optical sensor positioned above the conveyor for continuous visual recognition of items.</p>
+            </div>
+
+            <!-- 5. 2 robotic hands -->
+            <div class="tech-hardware-card">
+              <div class="hardware-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/></svg>
+              </div>
+              <h3 class="hardware-title">2 robotic hands</h3>
+              <p class="hardware-desc">Dual articulated manipulators engineered to pick and place categorized medical waste items into assigned chutes.</p>
+            </div>
+
+            <!-- 6. Gravity chutes -->
+            <div class="tech-hardware-card">
+              <div class="hardware-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+              </div>
+              <h3 class="hardware-title">Gravity chutes</h3>
+              <p class="hardware-desc">Passive downward channels that guide sorted items cleanly into storage compartments with zero extra motors.</p>
+            </div>
+
+            <!-- 7. 4 sealed compartments -->
+            <div class="tech-hardware-card">
+              <div class="hardware-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+              </div>
+              <h3 class="hardware-title">4 sealed compartments</h3>
+              <p class="hardware-desc">Four isolated, odor-sealed and leak-proof internal bins matching standard biomedical color codes.</p>
+            </div>
+
+            <!-- 8. LiDAR sensors -->
+            <div class="tech-hardware-card">
+              <div class="hardware-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              </div>
+              <h3 class="hardware-title">LiDAR sensors</h3>
+              <p class="hardware-desc">360-degree laser range finding for real-time obstacle avoidance, doorway clearance, and 2D mapping.</p>
+            </div>
+
+            <!-- 9. Weight sensors -->
+            <div class="tech-hardware-card">
+              <div class="hardware-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
+              </div>
+              <h3 class="hardware-title">Weight sensors</h3>
+              <p class="hardware-desc">Integrated load cells to measure collected waste mass per ward and monitor compartment capacity.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. AI SORTING LOGIC CONTENT -->
+        <div class="tech-tab-pane" id="tab-ai-sorting">
+          <div class="ai-logic-wrapper">
+            <div class="ai-logic-header">
+              <h3 class="ai-logic-heading">AI SORTING LOGIC</h3>
+              <p class="ai-logic-sub">Visual decision hierarchy for incoming hospital waste materials</p>
+            </div>
+
+            <div class="decision-tree-container">
+              <!-- Node A -->
+              <div class="decision-card primary-branch">
+                <div class="decision-step-badge">STAGE 1</div>
+                <h4 class="decision-title">Whole coloured bags and sealed containers</h4>
+                <div class="decision-arrow-down">↓</div>
+                <div class="decision-outcome outcome-primary">
+                  <span class="outcome-tag">Primary sorting</span>
+                  <p>Categorized directly by color code</p>
+                </div>
+              </div>
+
+              <!-- Node B -->
+              <div class="decision-card fallback-branch">
+                <div class="decision-step-badge">STAGE 2</div>
+                <h4 class="decision-title">Loose items</h4>
+                <div class="decision-arrow-down">↓</div>
+                <div class="decision-outcome outcome-secondary">
+                  <span class="outcome-tag">Fallback handling</span>
+                  <p>Item-level computer vision classification</p>
+                </div>
+              </div>
+
+              <!-- Node C -->
+              <div class="decision-card rescan-branch">
+                <div class="decision-step-badge">STAGE 3</div>
+                <h4 class="decision-title">Low AI confidence</h4>
+                <div class="decision-arrow-down">↓</div>
+                <div class="decision-outcome outcome-rescan">
+                  <span class="outcome-tag">Re-scan spot</span>
+                  <p>Not guessed; re-routed for second inspection</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="rules-compliance-banner">
+              <div class="compliance-badge">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <p class="compliance-text">
+                Waste categories follow the colour codes of the <strong>Biomedical Waste Management Rules</strong> (Yellow, Red, White/Translucent, and Blue).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. NAVIGATION CONTENT -->
+        <div class="tech-tab-pane" id="tab-navigation">
+          <div class="grid-2-col">
+            <div class="nav-tech-card">
+              <div class="card-tag">POSITIONING</div>
+              <h3 class="nav-card-title">INDOOR NAVIGATION</h3>
+              <p class="nav-card-desc">LiDAR or beacons for location tracking across wards, elevators, and corridors without external dependencies.</p>
+            </div>
+
+            <div class="nav-tech-card">
+              <div class="card-tag">EXTERIOR TRANSIT</div>
+              <h3 class="nav-card-title">OUTDOOR NAVIGATION</h3>
+              <p class="nav-card-desc">GPS only if needed for hospital campus transit between separate building blocks.</p>
+            </div>
+
+            <div class="nav-tech-card">
+              <div class="card-tag">STAFF DISPATCH</div>
+              <h3 class="nav-card-title">EMERGENCY CALL</h3>
+              <p class="nav-card-desc"><strong>B4</strong> = floor + room. Allows instant dispatch when a ward bin fills ahead of schedule.</p>
+            </div>
+
+            <div class="nav-tech-card">
+              <div class="card-tag">POWER MANAGEMENT</div>
+              <h3 class="nav-card-title">CHARGING</h3>
+              <p class="nav-card-desc">Robot returns at about <strong>25–30%</strong> battery so it is never stranded in transit.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. TRACKING CONTENT -->
+        <div class="tech-tab-pane" id="tab-tracking">
+          <div class="tracking-overview-card">
+            <div class="tracking-text-block">
+              <h3 class="tracking-main-title">SMART TRACKING</h3>
+              <p class="tracking-lead">Each collection is logged with:</p>
+              <div class="tracking-tags-grid">
+                <span class="track-tag">Time</span>
+                <span class="track-tag">Ward</span>
+                <span class="track-tag">Waste type</span>
+                <span class="track-tag">Weight</span>
+              </div>
+              <p class="tracking-desc">An appointed official can see robot location, robot status, floor map, and completed areas in real time.</p>
+            </div>
+
+            <!-- Dashboard UI Mockup built with HTML & CSS -->
+            <div class="dashboard-mockup">
+              <div class="dashboard-header-bar">
+                <div class="dash-status-dot"></div>
+                <span class="dash-title">NOVAMINDS FLEET MONITOR (DEMO UI)</span>
+                <span class="dash-badge-online">ACTIVE ROUND</span>
+              </div>
+
+              <div class="dashboard-body">
+                <!-- Location & Status -->
+                <div class="dash-row">
+                  <div class="dash-stat-box">
+                    <small>CURRENT LOCATION</small>
+                    <strong>Ward 3B — Oncology Wing</strong>
+                  </div>
+                  <div class="dash-stat-box">
+                    <small>ROBOT STATUS</small>
+                    <strong class="text-green">Collecting & Sorting</strong>
+                  </div>
+                  <div class="dash-stat-box">
+                    <small>BATTERY STATE</small>
+                    <strong>78% (Nominal)</strong>
+                  </div>
+                </div>
+
+                <!-- Simulated Floor Map Placeholder -->
+                <div class="dash-floor-map">
+                  <div class="map-grid-lines"></div>
+                  <div class="map-room room-a">ICU 1</div>
+                  <div class="map-room room-b completed">WARD 3A <span class="check-mark">✓</span></div>
+                  <div class="map-room room-c active-room">WARD 3B <span class="robot-pin">🤖</span></div>
+                  <div class="map-room room-d">SURGERY 2</div>
+                  <div class="map-lift">LIFT 1</div>
+                </div>
+
+                <!-- Collection History Demo Cards -->
+                <div class="dash-history-list">
+                  <div class="history-item">
+                    <span class="history-time">09:15 AM</span>
+                    <span class="history-ward">Ward 3A</span>
+                    <span class="history-type">Yellow (Infectious)</span>
+                    <span class="history-weight">Sample Data: Logged</span>
+                  </div>
+                  <div class="history-item">
+                    <span class="history-time">09:35 AM</span>
+                    <span class="history-ward">Ward 3B</span>
+                    <span class="history-type">Red (Plastics/Tubing)</span>
+                    <span class="history-weight">Sample Data: In-Progress</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== DESIGNED FOR THE REAL WORLD (3D ENGINEERING DESIGN EXPLORER) ==================== -->
+    <section class="section fusion-section" id="fusion">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">ENGINEERING DESIGN REVIEW & CAD EXPLORER</span>
+          <h2 class="section-title">DESIGNED FOR THE REAL WORLD</h2>
+          <p class="section-subtitle">Every mechanical decision is engineered around practical hospital operation and maintenance realities</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <!-- Master 3D Engineering Design Explorer Console -->
+        <div class="explorer-3d-console" id="explorerConsole" data-reveal="fade-up">
+
+          <!-- 3D Studio Viewport -->
+          <div class="explorer-3d-viewport" id="explorerViewport">
+            <canvas id="explorerRobotCanvas"></canvas>
+
+            <!-- Top Left: CAD Review HUD -->
+            <div class="exp-hud-top">
+              <div class="exp-stage-pill" id="expModePill">
+                <span class="exp-pulse-dot"></span>
+                <span>01 — STRUCTURAL ERGONOMICS</span>
+              </div>
+              <div class="exp-hud-title-box">
+                <span class="exp-category-tag" id="expCategory">STRUCTURAL ERGONOMICS</span>
+                <h3 class="exp-hud-headline" id="expTitle">COMPACT MODULAR BODY</h3>
+                <p class="exp-hud-desc" id="expDesc">Modular exterior panels optimize tight corridor clearances and facilitate effortless module separation during maintenance.</p>
+              </div>
+            </div>
+
+            <!-- Top Right: Dynamic Engineering Specs Panel -->
+            <div class="exp-spec-panel visible" id="expSpecBox">
+              <div class="exp-spec-header">
+                <div class="spec-title-group">
+                  <span class="spec-icon">📐</span>
+                  <strong class="spec-title" id="expSpecTitle">CAD SPECIFICATIONS</strong>
+                </div>
+                <button class="btn-spec-close" id="expSpecClose" title="Hide Specs Card">✕</button>
+              </div>
+              <div class="exp-spec-content" id="expSpecDetails">
+                <div class="spec-row"><span class="spec-k">Material:</span><span class="spec-v">Medical-grade antimicrobial ABS / Polycarbonate</span></div>
+                <div class="spec-row"><span class="spec-k">Door Clearance:</span><span class="spec-v">Fits standard 850mm hospital doorways</span></div>
+                <div class="spec-row"><span class="spec-k">Form Factor:</span><span class="spec-v">Compact aerodynamic footprint with zero sharp corners</span></div>
+                <div class="spec-row"><span class="spec-k">Maintenance:</span><span class="spec-v">4-point quick-release latches for instant servicing</span></div>
+              </div>
+            </div>
+
+            <!-- Left: Component Inspector Sidebar -->
+            <div class="exp-inspector-sidebar">
+              <span class="inspector-sidebar-title">COMPONENT INSPECTOR</span>
+              <div class="inspector-btn-list">
+                <button class="exp-comp-btn active" data-comp="all"><span>All Assembly</span></button>
+                <button class="exp-comp-btn" data-comp="upperHood"><span>Body & Hood</span></button>
+                <button class="exp-comp-btn" data-comp="chassis"><span>Chassis Frame</span></button>
+                <button class="exp-comp-btn" data-comp="wheels"><span>4 Drive Wheels</span></button>
+                <button class="exp-comp-btn" data-comp="hopper"><span>Intake Hopper</span></button>
+                <button class="exp-comp-btn" data-comp="conveyor"><span>Conveyor Feed</span></button>
+                <button class="exp-comp-btn" data-comp="aiCamera"><span>AI Camera Gantry</span></button>
+                <button class="exp-comp-btn" data-comp="roboticHands"><span>2 Robotic Hands</span></button>
+                <button class="exp-comp-btn" data-comp="chutes"><span>Gravity Chutes</span></button>
+                <button class="exp-comp-btn" data-comp="compartments"><span>4 Sealed Bins</span></button>
+                <button class="exp-comp-btn" data-comp="battery"><span>LiFePO4 Battery</span></button>
+                <button class="exp-comp-btn" data-comp="controlElectronics"><span>Control Unit</span></button>
+              </div>
+            </div>
+
+            <!-- Bottom Floating 3D Tools Bar -->
+            <div class="exp-controls-bar">
+              <div class="exp-ctrl-group">
+                <button class="btn-exp-action btn-exp-highlight" id="expBtnExplode" title="Explode / Collapse Assembly Layers">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93"/></svg>
+                  <span>Exploded View</span>
+                </button>
+                <button class="btn-exp-action" id="expBtnCutaway" title="Toggle X-Ray / Translucent Cutaway Shell">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                  <span>X-Ray View</span>
+                </button>
+                <button class="btn-exp-action active" id="expBtnLabels" title="Toggle 3D Component Labels">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                  <span>3D Labels</span>
+                </button>
+                <button class="btn-exp-action" id="expBtnDimensions" title="Show Doorway & Corridor Clearance Envelopes">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                  <span>Dimensions</span>
+                </button>
+              </div>
+
+              <div class="exp-ctrl-group">
+                <button class="btn-exp-action" id="expBtnAutoRotate" title="Toggle Slow Engineering Turntable">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+                  <span>Turntable</span>
+                </button>
+                <button class="btn-exp-action" id="expBtnResetView" title="Reset Camera and Assembly State">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                  <span>Reset View</span>
+                </button>
+              </div>
+            </div>
+
+          </div><!-- /explorer-3d-viewport -->
+
+          <!-- 10 Core Engineering Decision Review Tabs -->
+          <div class="exp-features-dock">
+            <div class="exp-features-label">
+              <span>ENGINEERING DECISION MATRIX</span>
+              <small>Click any decision to inspect mechanical rationale & CAD assembly</small>
+            </div>
+
+            <div class="exp-feature-tabs">
+              <button class="exp-feature-tab active" data-feature="0">
+                <span class="feat-num">01</span>
+                <span class="feat-title">COMPACT BODY</span>
+              </button>
+              <button class="exp-feature-tab" data-feature="1">
+                <span class="feat-num">02</span>
+                <span class="feat-title">4-WHEEL DRIVE</span>
+              </button>
+              <button class="exp-feature-tab" data-feature="2">
+                <span class="feat-num">03</span>
+                <span class="feat-title">NO STAIRS (LIFT)</span>
+              </button>
+              <button class="exp-feature-tab" data-feature="3">
+                <span class="feat-num">04</span>
+                <span class="feat-title">2 ROBOTIC HANDS</span>
+              </button>
+              <button class="exp-feature-tab" data-feature="4">
+                <span class="feat-num">05</span>
+                <span class="feat-title">GRAVITY CHUTES</span>
+              </button>
+              <button class="exp-feature-tab" data-feature="5">
+                <span class="feat-num">06</span>
+                <span class="feat-title">4 SEALED BINS</span>
+              </button>
+              <button class="exp-feature-tab" data-feature="6">
+                <span class="feat-num">07</span>
+                <span class="feat-title">INTERNAL LAYOUT</span>
+              </button>
+              <button class="exp-feature-tab" data-feature="7">
+                <span class="feat-num">08</span>
+                <span class="feat-title">MAINTENANCE</span>
+              </button>
+              <button class="exp-feature-tab" data-feature="8">
+                <span class="feat-num">09</span>
+                <span class="feat-title">CHASSIS STABILITY</span>
+              </button>
+              <button class="exp-feature-tab" data-feature="9">
+                <span class="feat-num">10</span>
+                <span class="feat-title">MANUFACTURABILITY</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom 5 Core Engineering Design Pillars -->
+          <div class="exp-pillars-bar">
+            <div class="exp-pillar-item">
+              <span class="pillar-label">01. COMPACT</span>
+              <span class="pillar-sub">850mm corridor envelope</span>
+            </div>
+            <div class="exp-pillar-divider">|</div>
+            <div class="exp-pillar-item">
+              <span class="pillar-label">02. MOBILE</span>
+              <span class="pillar-sub">Zero-turn 4-wheel base</span>
+            </div>
+            <div class="exp-pillar-divider">|</div>
+            <div class="exp-pillar-item">
+              <span class="pillar-label">03. SIMPLE</span>
+              <span class="pillar-sub">2 arms & gravity chutes</span>
+            </div>
+            <div class="exp-pillar-divider">|</div>
+            <div class="exp-pillar-item">
+              <span class="pillar-label">04. MODULAR</span>
+              <span class="pillar-sub">Slide-out CPCB bins</span>
+            </div>
+            <div class="exp-pillar-divider">|</div>
+            <div class="exp-pillar-item">
+              <span class="pillar-label">05. SERVICEABLE</span>
+              <span class="pillar-sub">Single-tool panel access</span>
+            </div>
+          </div>
+
+        </div><!-- /explorer-3d-console -->
+
+      </div>
+    </section>
+
+    <!-- ==================== FEASIBILITY ==================== -->
+    <section class="section feasibility-section" id="feasibility">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">PRACTICAL IMPLEMENTATION</span>
+          <h2 class="section-title">WHY IT IS FEASIBLE</h2>
+          <p class="section-subtitle">Grounded in proven components and realistic hospital infrastructure</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="grid-3-col">
+          <!-- Card 1 -->
+          <div class="feasibility-card" data-reveal="fade-up" data-delay="100">
+            <div class="feasibility-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3 class="feasibility-title">EXISTING TECHNOLOGY</h3>
+            <p class="feasibility-desc">Mobile robots, conveyors, robotic arms, camera-based AI and LiDAR navigation already exist as components.</p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="feasibility-card" data-reveal="fade-up" data-delay="200">
+            <div class="feasibility-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 10 12 7 15 10"/><polyline points="9 14 12 17 15 14"/></svg>
+            </div>
+            <h3 class="feasibility-title">SIMPLIFIED MOBILITY</h3>
+            <p class="feasibility-desc">No stairs. The robot uses the hospital lift to move seamlessly across all hospital floors.</p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="feasibility-card" data-reveal="fade-up" data-delay="300">
+            <div class="feasibility-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            </div>
+            <h3 class="feasibility-title">LOWER COMPLEXITY</h3>
+            <p class="feasibility-desc">Two robotic hands instead of four, drastically simplifying control algorithms and mechanical failure points.</p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="feasibility-card" data-reveal="fade-up" data-delay="400">
+            <div class="feasibility-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 17l-5 5-5-5"/></svg>
+            </div>
+            <h3 class="feasibility-title">GRAVITY-BASED SORTING</h3>
+            <p class="feasibility-desc">Gravity chutes require no extra motors, reducing total robot power draw and moving parts.</p>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="feasibility-card" data-reveal="fade-up" data-delay="500">
+            <div class="feasibility-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3 class="feasibility-title">HOSPITAL COMPATIBILITY</h3>
+            <p class="feasibility-desc">Hospitals already have lifts, bins and waste-management departments ready for integration.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CHALLENGES & SOLUTIONS ==================== -->
+    <section class="section challenges-solutions-section bg-light" id="challenges-solutions">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">ENGINEERING RESOLUTIONS</span>
+          <h2 class="section-title">CHALLENGES & OUR SOLUTIONS</h2>
+          <p class="section-subtitle">Direct engineering answers to practical deployment obstacles</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="comparison-table-wrapper" data-reveal="fade-up">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th scope="col" class="th-challenge">CHALLENGE</th>
+                <th scope="col" class="th-arrow"></th>
+                <th scope="col" class="th-solution">OUR SOLUTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-challenge" data-label="CHALLENGE">
+                  <div class="challenge-cell">
+                    <span class="cell-bullet danger"></span>
+                    AI may misidentify an item
+                  </div>
+                </td>
+                <td class="td-arrow"><span class="table-arrow">→</span></td>
+                <td class="td-solution" data-label="OUR SOLUTION">
+                  <div class="solution-cell">
+                    <span class="cell-bullet success"></span>
+                    Re-scan spot instead of guessing
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-challenge" data-label="CHALLENGE">
+                  <div class="challenge-cell">
+                    <span class="cell-bullet danger"></span>
+                    Robot entering a sensitive area
+                  </div>
+                </td>
+                <td class="td-arrow"><span class="table-arrow">→</span></td>
+                <td class="td-solution" data-label="OUR SOLUTION">
+                  <div class="solution-cell">
+                    <span class="cell-bullet success"></span>
+                    Badge or button approval before entry
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-challenge" data-label="CHALLENGE">
+                  <div class="challenge-cell">
+                    <span class="cell-bullet danger"></span>
+                    Items piling up on the belt
+                  </div>
+                </td>
+                <td class="td-arrow"><span class="table-arrow">→</span></td>
+                <td class="td-solution" data-label="OUR SOLUTION">
+                  <div class="solution-cell">
+                    <span class="cell-bullet success"></span>
+                    Hopper gate and slow conveyor
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-challenge" data-label="CHALLENGE">
+                  <div class="challenge-cell">
+                    <span class="cell-bullet danger"></span>
+                    Robot battery running out
+                  </div>
+                </td>
+                <td class="td-arrow"><span class="table-arrow">→</span></td>
+                <td class="td-solution" data-label="OUR SOLUTION">
+                  <div class="solution-cell">
+                    <span class="cell-bullet success"></span>
+                    Auto-return at 25–30%
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-challenge" data-label="CHALLENGE">
+                  <div class="challenge-cell">
+                    <span class="cell-bullet danger"></span>
+                    Sorting speed with only 2 hands
+                  </div>
+                </td>
+                <td class="td-arrow"><span class="table-arrow">→</span></td>
+                <td class="td-solution" data-label="OUR SOLUTION">
+                  <div class="solution-cell">
+                    <span class="cell-bullet success"></span>
+                    Slow belt and sorting whole bags first
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-challenge" data-label="CHALLENGE">
+                  <div class="challenge-cell">
+                    <span class="cell-bullet danger"></span>
+                    Spread of infection
+                  </div>
+                </td>
+                <td class="td-arrow"><span class="table-arrow">→</span></td>
+                <td class="td-solution" data-label="OUR SOLUTION">
+                  <div class="solution-cell">
+                    <span class="cell-bullet success"></span>
+                    Sealed compartments and no human handling
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="td-challenge" data-label="CHALLENGE">
+                  <div class="challenge-cell">
+                    <span class="cell-bullet danger"></span>
+                    Bin filling early
+                  </div>
+                </td>
+                <td class="td-arrow"><span class="table-arrow">→</span></td>
+                <td class="td-solution" data-label="OUR SOLUTION">
+                  <div class="solution-cell">
+                    <span class="cell-bullet success"></span>
+                    Emergency call code with priority
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIABILITY & QUALITY ==================== -->
+    <section class="section viability-section" id="viability">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">PROJECT READINESS</span>
+          <h2 class="section-title">VIABILITY & QUALITY</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="grid-4-col">
+          <!-- Cost -->
+          <div class="viability-card" data-reveal="fade-up" data-delay="100">
+            <div class="viability-badge">COST</div>
+            <h3 class="viability-title">Economic Efficiency</h3>
+            <p class="viability-desc">A simple design with fewer arms keeps the cost lower and simplifies mechanical maintenance.</p>
+          </div>
+
+          <!-- Manufacturability -->
+          <div class="viability-card" data-reveal="fade-up" data-delay="200">
+            <div class="viability-badge">MANUFACTURABILITY</div>
+            <h3 class="viability-title">Modular Construction</h3>
+            <p class="viability-desc">Standard parts and modular design ensure fast assembly, easy replacement, and local fabrication.</p>
+          </div>
+
+          <!-- Scalability -->
+          <div class="viability-card" data-reveal="fade-up" data-delay="300">
+            <div class="viability-badge">SCALABILITY</div>
+            <h3 class="viability-title">Fleet Deployment</h3>
+            <p class="viability-desc">More robots can be added seamlessly for bigger hospitals with multi-building campuses.</p>
+          </div>
+
+          <!-- Quality -->
+          <div class="viability-card" data-reveal="fade-up" data-delay="400">
+            <div class="viability-badge">QUALITY</div>
+            <h3 class="viability-title">Pre-Build Validation</h3>
+            <p class="viability-desc">Simulation checks strength and stability before physical building, ensuring high reliability.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RISKS WE KNOW ABOUT ==================== -->
+    <section class="section risks-section bg-light" id="risks">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">TRANSPARENT ENGINEERING</span>
+          <h2 class="section-title">RISKS WE KNOW ABOUT</h2>
+          <p class="section-subtitle">Identified operational variables and planned constraints</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="grid-2-col">
+          <div class="risk-card" data-reveal="fade-right">
+            <div class="risk-num">1</div>
+            <div class="risk-content">
+              <h3 class="risk-title">Lift Coordination</h3>
+              <p class="risk-desc">Lift usage needs coordination with hospital staff to manage peak passenger times.</p>
+            </div>
+          </div>
+
+          <div class="risk-card" data-reveal="fade-left">
+            <div class="risk-num">2</div>
+            <div class="risk-content">
+              <h3 class="risk-title">Vision Conditions</h3>
+              <p class="risk-desc">AI accuracy depends on camera position and lighting conditions inside the intake chamber.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== IMPACT & BENEFITS ==================== -->
+    <section class="section impact-section" id="impact">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">MULTIDIMENSIONAL VALUE</span>
+          <h2 class="section-title">IMPACT & BENEFITS</h2>
+          <p class="section-subtitle">Delivering measurable safety, operational, and environmental enhancements</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <!-- 5 Beneficiaries Grid -->
+        <div class="beneficiaries-grid">
+          <!-- 1. DOCTORS & NURSES -->
+          <div class="beneficiary-card" data-reveal="fade-up" data-delay="100">
+            <div class="ben-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3 class="ben-title">DOCTORS & NURSES</h3>
+            <p class="ben-desc">Less contact with infectious waste.</p>
+          </div>
+
+          <!-- 2. SANITATION STAFF -->
+          <div class="beneficiary-card" data-reveal="fade-up" data-delay="200">
+            <div class="ben-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="ben-title">SANITATION STAFF</h3>
+            <p class="ben-desc">Reduced exposure to risky waste handling.</p>
+          </div>
+
+          <!-- 3. HOSPITALS -->
+          <div class="beneficiary-card" data-reveal="fade-up" data-delay="300">
+            <div class="ben-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="21" width="18" height="2"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><line x1="12" y1="7" x2="12" y2="11"/><line x1="10" y1="9" x2="14" y2="9"/></svg>
+            </div>
+            <h3 class="ben-title">HOSPITALS</h3>
+            <p class="ben-desc">Fewer mistakes, less manual work and easier rule following.</p>
+          </div>
+
+          <!-- 4. WASTE MANAGEMENT -->
+          <div class="beneficiary-card" data-reveal="fade-up" data-delay="400">
+            <div class="ben-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+            <h3 class="ben-title">WASTE MANAGEMENT</h3>
+            <p class="ben-desc">Waste arrives already sorted.</p>
+          </div>
+
+          <!-- 5. PATIENTS -->
+          <div class="beneficiary-card" data-reveal="fade-up" data-delay="500">
+            <div class="ben-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h3 class="ben-title">PATIENTS</h3>
+            <p class="ben-desc">Cleaner and safer hospital environment.</p>
+          </div>
+        </div>
+
+        <!-- Triple Impact Pillars (Social, Economic, Environmental) -->
+        <div class="grid-3-col impact-pillars-wrapper">
+          <!-- Social Impact -->
+          <div class="impact-category-card" data-reveal="fade-up" data-delay="100">
+            <div class="impact-cat-header">
+              <span class="cat-pill pill-blue">HUMAN SAFETY</span>
+              <h3 class="cat-title">SOCIAL IMPACT</h3>
+            </div>
+            <ul class="impact-points-list">
+              <li>Reduces infection risk for people who work with waste</li>
+              <li>Supports cleaner and safer hospitals</li>
+            </ul>
+          </div>
+
+          <!-- Economic Impact -->
+          <div class="impact-category-card" data-reveal="fade-up" data-delay="200">
+            <div class="impact-cat-header">
+              <span class="cat-pill pill-cyan">OPERATIONAL EFFICIENCY</span>
+              <h3 class="cat-title">ECONOMIC IMPACT</h3>
+            </div>
+            <ul class="impact-points-list">
+              <li>Reduces manual labour cost over time</li>
+              <li>Less mistakes means less cost from wrong disposal</li>
+              <li>Battery-electric operation has low running cost</li>
+            </ul>
+          </div>
+
+          <!-- Environmental Impact -->
+          <div class="impact-category-card eco-card" data-reveal="fade-up" data-delay="300">
+            <div class="impact-cat-header">
+              <span class="cat-pill pill-green">SUSTAINABILITY</span>
+              <h3 class="cat-title">ENVIRONMENTAL IMPACT</h3>
+            </div>
+            <ul class="impact-points-list">
+              <li>No fuel emissions because the robot is battery-electric</li>
+              <li>Correct sorting helps proper treatment of each waste type</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Other Benefits Banner -->
+        <div class="other-benefits-card" data-reveal="fade-up">
+          <div class="other-ben-badge">ADDITIONAL ADVANTAGES</div>
+          <div class="other-ben-grid">
+            <div class="other-ben-item">
+              <div class="check-icon">✓</div>
+              <p>Digital records help in audits and inspections</p>
+            </div>
+            <div class="other-ben-item">
+              <div class="check-icon">✓</div>
+              <p>Staff save time and can focus on patients</p>
+            </div>
+            <div class="other-ben-item">
+              <div class="check-icon">✓</div>
+              <p>The idea can be scaled to more wards, floors and hospitals</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TEAM SECTION ==================== -->
+    <section class="section team-section bg-light" id="team">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">INNOVATORS BEHIND NOVAMINDS</span>
+          <h2 class="section-title">Team</h2>
+          <p class="section-subtitle">Dedicated engineering and design student innovators</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <!-- 6 Team Member Cards (2 rows × 3 columns) -->
+        <div class="team-grid">
+          <!-- Member 01: SATHISH KUMAR S -->
+          <div class="team-card" data-reveal="fade-up" data-delay="100">
+            <div class="team-img-wrapper">
+              <img src="assets/images/sathish.jpeg" alt="SATHISH KUMAR S" class="team-img" onerror="this.parentElement.classList.add('placeholder-active')">
+              <div class="team-placeholder-overlay">
+                <span class="placeholder-avatar">
+                  <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="placeholder-path">assets/images/sathish.jpeg</span>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">SATHISH KUMAR S</h3>
+              <p class="team-role">Team leader and CAD engineer</p>
+              <p class="team-dept">Dept of Mechanical Science</p>
+            </div>
+          </div>
+
+          <!-- Member 02: YUTHIHA M -->
+          <div class="team-card" data-reveal="fade-up" data-delay="150">
+            <div class="team-img-wrapper">
+              <img src="assets/images/yuthi.jpeg" alt="YUTHIHA M" class="team-img" onerror="this.parentElement.classList.add('placeholder-active')">
+              <div class="team-placeholder-overlay">
+                <span class="placeholder-avatar">
+                  <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="placeholder-path">assets/images/yuthi.jpeg</span>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">YUTHIHA M</h3>
+              <p class="team-role">Website, Documentation &amp; Presentation Lead</p>
+              <p class="team-dept">Dept of Agriculture</p>
+            </div>
+          </div>
+
+          <!-- Member 03: VINOTHA K -->
+          <div class="team-card" data-reveal="fade-up" data-delay="200">
+            <div class="team-img-wrapper">
+              <img src="assets/images/vino.jpeg" alt="VINOTHA K" class="team-img" onerror="this.parentElement.classList.add('placeholder-active')">
+              <div class="team-placeholder-overlay">
+                <span class="placeholder-avatar">
+                  <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="placeholder-path">assets/images/vino.jpeg</span>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">VINOTHA K</h3>
+              <p class="team-role">Textile &amp; User-Centric Research Lead</p>
+              <p class="team-dept">Dept of Agriculture</p>
+            </div>
+          </div>
+
+          <!-- Member 04: DHILIP KUMAR K -->
+          <div class="team-card" data-reveal="fade-up" data-delay="250">
+            <div class="team-img-wrapper">
+              <img src="assets/images/dhilip.png" alt="DHILIP KUMAR K" class="team-img" onerror="this.parentElement.classList.add('placeholder-active')">
+              <div class="team-placeholder-overlay">
+                <span class="placeholder-avatar">
+                  <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="placeholder-path">assets/images/dhilip.png</span>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">DHILIP KUMAR K</h3>
+              <p class="team-role">Testing and Performance Analysis Lead</p>
+              <p class="team-dept">Dept of Mechanical Science</p>
+            </div>
+          </div>
+
+          <!-- Member 05: ESRANE BENEDICT EK -->
+          <div class="team-card" data-reveal="fade-up" data-delay="300">
+            <div class="team-img-wrapper">
+              <img src="assets/images/benn.png" alt="ESRANE BENEDICT EK" class="team-img" onerror="this.parentElement.classList.add('placeholder-active')">
+              <div class="team-placeholder-overlay">
+                <span class="placeholder-avatar">
+                  <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="placeholder-path">assets/images/benn.png</span>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">ESRANE BENEDICT EK</h3>
+              <p class="team-role">Impact and Sustainability Lead</p>
+              <p class="team-dept">Dept of ECE</p>
+            </div>
+          </div>
+
+          <!-- Member 06: ABDUL ALTHAF A -->
+          <div class="team-card" data-reveal="fade-up" data-delay="350">
+            <div class="team-img-wrapper">
+              <img src="assets/images/althaf.png" alt="ABDUL ALTHAF A" class="team-img" onerror="this.parentElement.classList.add('placeholder-active')">
+              <div class="team-placeholder-overlay">
+                <span class="placeholder-avatar">
+                  <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="placeholder-path">assets/images/althaf.png</span>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3 class="team-name">ABDUL ALTHAF A</h3>
+              <p class="team-role">Technical Documentation Lead</p>
+              <p class="team-dept">Dept of ECE</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MENTORS SECTION ==================== -->
+    <section class="section mentors-section" id="mentors">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">ACADEMIC &amp; INDUSTRY GUIDANCE</span>
+          <h2 class="section-title">OUR MENTORS</h2>
+          <p class="section-subtitle">Project advisors guiding engineering rigor, compliance, and design architecture</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="mentors-grid">
+          <!-- Mentor 01: Muthusamy K -->
+          <div class="mentor-card" data-reveal="fade-up" data-delay="100">
+            <div class="mentor-img-wrapper">
+              <img src="assets/images/mentor-01.jpg" alt="Muthusamy K" class="mentor-img" onerror="this.parentElement.classList.add('placeholder-active')">
+              <div class="mentor-placeholder-overlay">
+                <span class="placeholder-avatar">
+                  <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="placeholder-path">assets/images/mentor-01.jpg</span>
+              </div>
+            </div>
+            <div class="mentor-details">
+              <h3 class="mentor-name">Muthusamy K</h3>
+              <p class="mentor-designation">Head – Technical Competition &amp; Hackathons</p>
+              <div class="mentor-org">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Rathinam Technical Campus, Coimbatore</span>
+              </div>
+              <div class="mentor-divider"></div>
+              <div class="mentor-section-block">
+                <div class="mentor-block-title">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                  <span>Expertise</span>
+                </div>
+                <div class="mentor-tags-list">
+                  <span class="mentor-tag-item">Embedded Systems</span>
+                  <span class="mentor-tag-item">Internet of Things (IoT)</span>
+                  <span class="mentor-tag-item">Power Electronics</span>
+                  <span class="mentor-tag-item">Student projects</span>
+                  <span class="mentor-tag-item">Technical competitions and hackathons</span>
+                </div>
+              </div>
+              <div class="mentor-meta-card">
+                <div class="mentor-meta-label">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span>Experience</span>
+                </div>
+                <p class="mentor-meta-text">15+ years of experience in Electrical and Electronics Engineering</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mentor 02: Er Gajendran Parthasarathi -->
+          <div class="mentor-card" data-reveal="fade-up" data-delay="200">
+            <div class="mentor-img-wrapper">
+              <img src="assets/images/mentor-02.jpg" alt="Er Gajendran Parthasarathi" class="mentor-img" onerror="this.parentElement.classList.add('placeholder-active')">
+              <div class="mentor-placeholder-overlay">
+                <span class="placeholder-avatar">
+                  <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="placeholder-path">assets/images/mentor-02.jpg</span>
+              </div>
+            </div>
+            <div class="mentor-details">
+              <h3 class="mentor-name">Er Gajendran Parthasarathi</h3>
+              <p class="mentor-designation">Head – School of Design &amp; Innovation</p>
+              <div class="mentor-org">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Rathinam Technical Campus, Coimbatore</span>
+              </div>
+              <div class="mentor-divider"></div>
+              <div class="mentor-section-block">
+                <div class="mentor-block-title">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                  <span>Expertise</span>
+                </div>
+                <div class="mentor-tags-list">
+                  <span class="mentor-tag-item">Education</span>
+                  <span class="mentor-tag-item">Research</span>
+                  <span class="mentor-tag-item">Electrical Engineering</span>
+                  <span class="mentor-tag-item">Design &amp; Innovation</span>
+                </div>
+              </div>
+              <div class="mentor-meta-card">
+                <div class="mentor-meta-label">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  <span>Additional Expertise</span>
+                </div>
+                <div class="mentor-subtags-list">
+                  <span class="mentor-subtag-item">Innovation</span>
+                  <span class="mentor-subtag-item">Design thinking</span>
+                  <span class="mentor-subtag-item">Research</span>
+                  <span class="mentor-subtag-item">Student projects</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mentor 03: Rajesh Mohan -->
+          <div class="mentor-card" data-reveal="fade-up" data-delay="300">
+            <div class="mentor-img-wrapper">
+              <img src="assets/images/mentor-03.jpg" alt="Rajesh Mohan" class="mentor-img" onerror="this.parentElement.classList.add('placeholder-active')">
+              <div class="mentor-placeholder-overlay">
+                <span class="placeholder-avatar">
+                  <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="placeholder-path">assets/images/mentor-03.jpg</span>
+              </div>
+            </div>
+            <div class="mentor-details">
+              <h3 class="mentor-name">Rajesh Mohan</h3>
+              <p class="mentor-designation">Assistant Professor – Mechanical Engineering</p>
+              <div class="mentor-org">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Rathinam Technical Campus, Coimbatore</span>
+              </div>
+              <div class="mentor-divider"></div>
+              <div class="mentor-section-block">
+                <div class="mentor-block-title">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                  <span>Expertise</span>
+                </div>
+                <div class="mentor-tags-list">
+                  <span class="mentor-tag-item">Mechanical Engineering</span>
+                  <span class="mentor-tag-item">Engineering Design</span>
+                  <span class="mentor-tag-item">CAD</span>
+                  <span class="mentor-tag-item">Manufacturing</span>
+                </div>
+              </div>
+              <div class="mentor-meta-card">
+                <div class="mentor-meta-label">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  <span>Additional Expertise</span>
+                </div>
+                <div class="mentor-subtags-list">
+                  <span class="mentor-subtag-item">Engineering Design</span>
+                  <span class="mentor-subtag-item">CAD</span>
+                  <span class="mentor-subtag-item">Prototyping</span>
+                  <span class="mentor-subtag-item">Research</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RESEARCH & REFERENCES ==================== -->
+    <section class="section references-section bg-light" id="references">
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-tag">FOUNDATIONAL STANDARDS</span>
+          <h2 class="section-title">RESEARCH & REFERENCES</h2>
+          <p class="section-subtitle">Regulatory guidelines and literature informing the NOVAMINDS architecture</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="grid-3-col">
+          <!-- Ref 1 -->
+          <div class="reference-card" data-reveal="fade-up" data-delay="100">
+            <div class="ref-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </div>
+            <h3 class="ref-title">Biomedical Waste Management Rules, 2016 (India)</h3>
+            <p class="ref-desc">Official regulatory framework defining segregation color codes, handling protocols, and disposal standards for healthcare facilities.</p>
+          </div>
+
+          <!-- Ref 2 -->
+          <div class="reference-card" data-reveal="fade-up" data-delay="200">
+            <div class="ref-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3 class="ref-title">CPCB guidelines on biomedical waste handling</h3>
+            <p class="ref-desc">Central Pollution Control Board technical criteria for containment, categorization, and barcoded traceability.</p>
+          </div>
+
+          <!-- Ref 3 -->
+          <div class="reference-card" data-reveal="fade-up" data-delay="300">
+            <div class="ref-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+            </div>
+            <h3 class="ref-title">Existing hospital delivery robots such as Aethon TUG</h3>
+            <p class="ref-desc">Precedent studies on autonomous mobile robot navigation, elevator integration, and indoor fleet logistics.</p>
+          </div>
+
+          <!-- Ref 4 -->
+          <div class="reference-card" data-reveal="fade-up" data-delay="400">
+            <div class="ref-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3 class="ref-title">Research papers on AI-based waste sorting and robotic pick-and-place</h3>
+            <p class="ref-desc">Scientific literature regarding convolutional neural network classification, optical conveyor feeds, and multi-axis manipulator kinematics.</p>
+          </div>
+
+          <!-- Ref 5 -->
+          <div class="reference-card" data-reveal="fade-up" data-delay="500">
+            <div class="ref-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <h3 class="ref-title">Autodesk Fusion documentation</h3>
+            <p class="ref-desc">Parametric CAD documentation, FEA stress simulation protocols, and kinematics validation workflows.</p>
+          </div>
+
+          <!-- Ref 6 -->
+          <div class="reference-card" data-reveal="fade-up" data-delay="600">
+            <div class="ref-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3 class="ref-title">Articles or reports on infection risks for healthcare waste handlers</h3>
+            <p class="ref-desc">Epidemiological studies and occupational health reports detailing needlestick injuries and pathogen exposure rates during manual sorting.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FINAL CALL TO ACTION ==================== -->
+    <section class="section final-cta-section">
+      <div class="cta-backdrop-glow"></div>
+      <div class="container text-center">
+        <div class="cta-inner" data-reveal="fade-up">
+          <div class="cta-badge">NOVAMINDS AUTONOMOUS ROBOTICS</div>
+          <h2 class="cta-title">
+            SMARTER WASTE MANAGEMENT.<br>
+            SAFER HOSPITALS.
+          </h2>
+          <p class="cta-subtitle">
+            A battery-electric autonomous approach to collecting, identifying, sorting and tracking biomedical waste.
+          </p>
+          <div class="cta-button-group">
+            <a href="#solution" class="btn btn-cta-primary">
+              <span>EXPLORE THE SOLUTION</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#hero" class="btn btn-cta-outline" id="backToTopBtn">
+              <span>BACK TO TOP</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Desc -->
+        <div class="footer-col footer-brand-col">
+          <a href="#hero" class="brand-logo footer-logo" aria-label="NOVAMINDS Home">
+            <img src="assets/images/logo.png" alt="NOVAMINDS Logo" class="logo-img" onerror="this.classList.add('img-fallback')">
+            <span class="logo-text-fallback">NOVAMINDS</span>
+          </a>
+          <p class="footer-tagline">
+            AI + Robotics + Healthcare Innovation
+          </p>
+          <p class="footer-short-desc">
+            Eliminating human exposure to hazardous biomedical waste through intelligent, battery-electric autonomous robotics.
+          </p>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="footer-col footer-links-col">
+          <h4 class="footer-heading">QUICK LINKS</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#problem">Problem</a></li>
+            <li><a href="#solution">Solution</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#technology">Technology</a></li>
+            <li><a href="#impact">Impact</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#mentors">Mentors</a></li>
+            <li><a href="#references">References</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Project Information -->
+        <div class="footer-col footer-project-col">
+          <h4 class="footer-heading">PROJECT</h4>
+          <p class="footer-proj-title">Smart Biomedical Waste Management Robot</p>
+          <div class="project-tags">
+            <span class="proj-tag">Autonomous Mobility</span>
+            <span class="proj-tag">AI Computer Vision</span>
+            <span class="proj-tag">Robotic Pick & Place</span>
+            <span class="proj-tag">Biomedical Safety</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright-text">© 2026 NOVAMINDS. All Rights Reserved.</p>
+        <p class="footer-note">Designed for Healthcare Innovation & Robotics Engineering Showcase</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Custom JavaScript -->
+  <script src="js/script.js"></script>
+
+  <!-- ==========================================================================
+       HERO 3D ROBOT DEMONSTRATION & CAD CUTAWAY SIMULATION ENGINE
+       ========================================================================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // Canvas & Container
+      const canvas = document.getElementById('heroRobotCanvas');
+      const wrapper = document.getElementById('hero3dCanvasWrapper');
+      if (!canvas || !wrapper) return;
+
+      let scene, camera, renderer, controls;
+      let clock = new THREE.Clock();
+
+      // Robot Object Hierarchy
+      let robotGroup = new THREE.Group();
+      let outerShellGroup = new THREE.Group();
+      let internalGroup = new THREE.Group();
+      let wheels = [];
+      let topLidarPuck;
+      let frontDoor;
+      let topRoboticArm = {};
+      let conveyorBelt;
+      let aiLaserMesh;
+      let internalArms = [];
+      let wasteBagMesh;
+      let shellMaterials = [];
+      let wireframeShells = [];
+      let compTanks = [];
+
+      // Animation & State
+      let animTime = 0.0;
+      const CYCLE_DURATION = 16.0; // 16s seamless loop
+      let isManualCutaway = false;
+      let isUserInteracting = false;
+      let currentCutawayFraction = 0.0;
+
+      // Target camera home position
+      const defaultCamPos = new THREE.Vector3(-3.2, 2.3, 3.8);
+      const defaultCamTarget = new THREE.Vector3(0, 0.95, 0);
+
+      // DOM HUD Elements
+      const hudTitle = document.getElementById('heroHudTitle');
+      const hudSmall = document.getElementById('heroHudSmall');
+      const btnCutaway = document.getElementById('btnToggleHeroCutaway');
+      const btnCutawayLabel = document.getElementById('btnCutawayLabel');
+      const btnResetCam = document.getElementById('btnResetHeroCam');
+      const aiOverlay = document.getElementById('heroAiScanOverlay');
+      const aiScanText = document.getElementById('aiScanText');
+
+      // Breadcrumb step elements
+      const steps = {
+        hopper: document.getElementById('stepHopper'),
+        conveyor: document.getElementById('stepConveyor'),
+        aiScan: document.getElementById('stepAiScan'),
+        roboticArm: document.getElementById('stepRoboticArm'),
+        chute: document.getElementById('stepChute'),
+        sealedBins: document.getElementById('stepSealedBins')
+      };
+
+      // Category pills
+      const catPills = document.querySelectorAll('.hero-cat-pill');
+
+      function init() {
+        // Scene
+        scene = new THREE.Scene();
+
+        // Camera
+        const rect = wrapper.getBoundingClientRect();
+        const aspect = (rect.width || 400) / (rect.height || 490);
+        camera = new THREE.PerspectiveCamera(42, aspect, 0.1, 50);
+        camera.position.copy(defaultCamPos);
+
+        // Renderer
+        renderer = new THREE.WebGLRenderer({
+          canvas: canvas,
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance"
+        });
+        renderer.setSize(rect.width || 400, rect.height || 490);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.3;
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        // OrbitControls
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 2.5;
+        controls.maxDistance = 10;
+        controls.maxPolarAngle = Math.PI / 2 + 0.05; // Prevent under-floor clipping
+        controls.target.copy(defaultCamTarget);
+
+        controls.addEventListener('start', () => { isUserInteracting = true; });
+        controls.addEventListener('end', () => {
+          setTimeout(() => { isUserInteracting = false; }, 3000);
+        });
+
+        // Lighting
+        setupLighting();
+
+        // Build Robot Model
+        buildRobotModel();
+        scene.add(robotGroup);
+
+        // UI Event Listeners
+        if (btnCutaway) {
+          btnCutaway.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isManualCutaway = !isManualCutaway;
+            btnCutaway.classList.toggle('active', isManualCutaway);
+            btnCutawayLabel.innerText = isManualCutaway ? "📦 Solid View" : "🔬 Cutaway View";
+          });
+        }
+
+        if (btnResetCam) {
+          btnResetCam.addEventListener('click', (e) => {
+            e.stopPropagation();
+            camera.position.copy(defaultCamPos);
+            controls.target.copy(defaultCamTarget);
+            controls.update();
+          });
+        }
+
+        window.addEventListener('resize', onResize);
+
+        // Start Animation Loop
+        animate();
+      }
+
+      /* --------------------------------------------------------------------------
+         LIGHTING SETUP
+         -------------------------------------------------------------------------- */
+      function setupLighting() {
+        // Soft Ambient Light
+        const ambLight = new THREE.AmbientLight(0xdbeafe, 0.75);
+        scene.add(ambLight);
+
+        // Key Studio Directional Light (Clean White)
+        const keyLight = new THREE.DirectionalLight(0xffffff, 1.3);
+        keyLight.position.set(5, 8, 6);
+        keyLight.castShadow = true;
+        keyLight.shadow.mapSize.width = 1024;
+        keyLight.shadow.mapSize.height = 1024;
+        keyLight.shadow.bias = -0.001;
+        scene.add(keyLight);
+
+        // Cyan/Teal Brand Fill Light
+        const fillLight = new THREE.DirectionalLight(0x00d2ff, 0.6);
+        fillLight.position.set(-6, 4, -4);
+        scene.add(fillLight);
+
+        // Green Secondary Rim Light
+        const rimLight = new THREE.DirectionalLight(0x18a957, 0.5);
+        rimLight.position.set(0, 6, -6);
+        scene.add(rimLight);
+
+        // Subtle Floor Reflector / Ground Contact Plane
+        const groundGeo = new THREE.PlaneGeometry(8, 8);
+        const groundMat = new THREE.MeshStandardMaterial({
+          color: 0x070c14,
+          roughness: 0.3,
+          metalness: 0.5,
+          transparent: true,
+          opacity: 0.6
+        });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = 0.01;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // Radial Grid Floor Guide
+        const grid = new THREE.GridHelper(8, 16, 0x00d2ff, 0x1e293b);
+        grid.position.y = 0.02;
+        scene.add(grid);
+      }
+
+      /* --------------------------------------------------------------------------
+         BUILD ROBOT MODEL (Precise NOVAMINDS Logo Engineering Match)
+         -------------------------------------------------------------------------- */
+      function buildRobotModel() {
+        robotGroup.position.set(0, 0, 0);
+
+        // 1. LOWER DARK CHASSIS (Differential Drive Mobile Base)
+        const chassisMat = new THREE.MeshStandardMaterial({
+          color: 0x151b26,
+          roughness: 0.4,
+          metalness: 0.8
+        });
+        const chassisGeo = new THREE.BoxGeometry(1.6, 0.28, 2.4);
+        const chassis = new THREE.Mesh(chassisGeo, chassisMat);
+        chassis.position.y = 0.32;
+        chassis.castShadow = true;
+        robotGroup.add(chassis);
+
+        // 4 Heavy-Duty Wheels with Cyan Illuminated Hub Accents
+        const wheelGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.16, 32);
+        const tireMat = new THREE.MeshStandardMaterial({ color: 0x0d1117, roughness: 0.8, metalness: 0.2 });
+        const hubMat = new THREE.MeshStandardMaterial({
+          color: 0x00d2ff,
+          emissive: 0x0088cc,
+          emissiveIntensity: 0.6,
+          metalness: 0.9,
+          roughness: 0.2
+        });
+        const rimMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.9, roughness: 0.2 });
+
+        const wheelOffsets = [
+          [-0.88, 0.24, 0.7],
+          [0.88, 0.24, 0.7],
+          [-0.88, 0.24, -0.7],
+          [0.88, 0.24, -0.7]
+        ];
+
+        wheelOffsets.forEach(pos => {
+          const wGroup = new THREE.Group();
+          wGroup.position.set(pos[0], pos[1], pos[2]);
+
+          const tire = new THREE.Mesh(wheelGeo, tireMat);
+          tire.rotation.z = Math.PI / 2;
+          tire.castShadow = true;
+          wGroup.add(tire);
+
+          const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.17, 16), hubMat);
+          hub.rotation.z = Math.PI / 2;
+          wGroup.add(hub);
+
+          const rimRing = new THREE.Mesh(new THREE.TorusGeometry(0.18, 0.015, 12, 24), rimMat);
+          rimRing.rotation.y = Math.PI / 2;
+          wGroup.add(rimRing);
+
+          robotGroup.add(wGroup);
+          wheels.push(wGroup);
+        });
+
+        // 2. MAIN MEDICAL-GRADE COMPOSITE SHELL (White + Dark Gray Accents)
+        const medicalWhiteMat = new THREE.MeshStandardMaterial({
+          color: 0xf8fafc,
+          roughness: 0.2,
+          metalness: 0.1,
+          transparent: true,
+          opacity: 1.0
+        });
+        shellMaterials.push(medicalWhiteMat);
+
+        const darkTrimMat = new THREE.MeshStandardMaterial({
+          color: 0x1e2430,
+          roughness: 0.35,
+          metalness: 0.6,
+          transparent: true,
+          opacity: 1.0
+        });
+        shellMaterials.push(darkTrimMat);
+
+        // Main Rounded Body Hood
+        const hoodGeo = new THREE.BoxGeometry(1.54, 1.25, 2.2);
+        const mainHood = new THREE.Mesh(hoodGeo, medicalWhiteMat);
+        mainHood.position.set(0, 1.1, 0);
+        mainHood.castShadow = true;
+        outerShellGroup.add(mainHood);
+
+        // Lower Dark Skirt Trim
+        const skirtGeo = new THREE.BoxGeometry(1.58, 0.18, 2.24);
+        const skirt = new THREE.Mesh(skirtGeo, darkTrimMat);
+        skirt.position.set(0, 0.52, 0);
+        outerShellGroup.add(skirt);
+
+        // Front Automated Intake Door / Flap
+        const doorGeo = new THREE.BoxGeometry(1.0, 0.48, 0.08);
+        const doorMat = new THREE.MeshStandardMaterial({
+          color: 0x00d2ff,
+          emissive: 0x004080,
+          emissiveIntensity: 0.3,
+          roughness: 0.2,
+          metalness: 0.8,
+          transparent: true,
+          opacity: 1.0
+        });
+        shellMaterials.push(doorMat);
+
+        frontDoor = new THREE.Mesh(doorGeo, doorMat);
+        frontDoor.position.set(0, 1.18, -1.11);
+        outerShellGroup.add(frontDoor);
+
+        // Front Status Screen Display
+        const screenGeo = new THREE.BoxGeometry(0.8, 0.35, 0.02);
+        const screenMat = new THREE.MeshBasicMaterial({ color: 0x00d2ff });
+        const screen = new THREE.Mesh(screenGeo, screenMat);
+        screen.position.set(0, 1.5, -1.11);
+        outerShellGroup.add(screen);
+
+        // Medical Cross Emblem (Sides)
+        const crossMat = new THREE.MeshBasicMaterial({ color: 0xef4444, transparent: true, opacity: 1.0 });
+        shellMaterials.push(crossMat);
+
+        [-0.78, 0.78].forEach(xPos => {
+          const crossH = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.06, 0.24), crossMat);
+          crossH.position.set(xPos, 1.25, 0.6);
+          outerShellGroup.add(crossH);
+
+          const crossV = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.24, 0.06), crossMat);
+          crossV.position.set(xPos, 1.25, 0.6);
+          outerShellGroup.add(crossV);
+        });
+
+        // 4 Visible Side Waste Compartments (Matching Logo Colors: Yellow, Red, White, Blue)
+        const compPositions = [
+          { x: -0.78, y: 0.85, z: -0.4, color: 0xf59e0b, name: "Yellow: Infectious" },
+          { x: 0.78,  y: 0.85, z: -0.4, color: 0xef4444, name: "Red: Plastics" },
+          { x: -0.78, y: 0.85, z: 0.35, color: 0xf8fafc, name: "White: Sharps" },
+          { x: 0.78,  y: 0.85, z: 0.35, color: 0x3b82f6, name: "Blue: Glass/Pharma" }
+        ];
+
+        compPositions.forEach(pos => {
+          const doorGeo = new THREE.BoxGeometry(0.03, 0.45, 0.5);
+          const doorMat = new THREE.MeshStandardMaterial({
+            color: pos.color,
+            metalness: 0.4,
+            roughness: 0.3,
+            transparent: true,
+            opacity: 1.0
+          });
+          shellMaterials.push(doorMat);
+
+          const compDoor = new THREE.Mesh(doorGeo, doorMat);
+          compDoor.position.set(pos.x, pos.y, pos.z);
+          outerShellGroup.add(compDoor);
+
+          // Subtle glowing category indicator dot
+          const dot = new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 12), new THREE.MeshBasicMaterial({ color: pos.color }));
+          dot.position.set(pos.x > 0 ? pos.x + 0.02 : pos.x - 0.02, pos.y + 0.16, pos.z);
+          outerShellGroup.add(dot);
+        });
+
+        // Wireframe CAD Overlay for Ghost Cutaway View
+        const wireGeo = new THREE.EdgesGeometry(hoodGeo);
+        const wireMat = new THREE.LineBasicMaterial({
+          color: 0x00d2ff,
+          transparent: true,
+          opacity: 0.0
+        });
+        const wireframe = new THREE.LineSegments(wireGeo, wireMat);
+        wireframe.position.copy(mainHood.position);
+        wireframeShells.push(wireMat);
+        outerShellGroup.add(wireframe);
+
+        robotGroup.add(outerShellGroup);
+
+        // 3. TOP-MOUNTED 360° LIDAR UNIT
+        const lidarBaseGeo = new THREE.CylinderGeometry(0.14, 0.16, 0.1, 24);
+        const lidarBaseMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.3 });
+        const lidarBase = new THREE.Mesh(lidarBaseGeo, lidarBaseMat);
+        lidarBase.position.set(0, 1.77, -0.7);
+        robotGroup.add(lidarBase);
+
+        const lidarPuckGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.12, 24);
+        const lidarPuckMat = new THREE.MeshStandardMaterial({ color: 0x090d16, roughness: 0.1, metalness: 0.9 });
+        topLidarPuck = new THREE.Mesh(lidarPuckGeo, lidarPuckMat);
+        topLidarPuck.position.set(0, 1.88, -0.7);
+
+        const lidarLens = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.12), new THREE.MeshBasicMaterial({ color: 0x00d2ff }));
+        lidarLens.position.set(0.1, 0, 0);
+        topLidarPuck.add(lidarLens);
+        robotGroup.add(topLidarPuck);
+
+        // 4. TOP/REAR ARTICULATED ROBOTIC ARM (Matching Logo Reference)
+        buildTopRoboticArm();
+
+        // 5. INTERNAL MECHANISM (Hopper, Conveyor, AI Camera, Chutes, Sealed Bins)
+        buildInternalComponents();
+        robotGroup.add(internalGroup);
+      }
+
+      /* --------------------------------------------------------------------------
+         TOP/REAR ARTICULATED ROBOTIC ARM
+         -------------------------------------------------------------------------- */
+      function buildTopRoboticArm() {
+        const armGroup = new THREE.Group();
+        armGroup.position.set(0, 1.73, 0.4); // Mounted on top/rear deck
+
+        // Turret Base
+        const turretGeo = new THREE.CylinderGeometry(0.12, 0.14, 0.08, 24);
+        const turretMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.9, roughness: 0.2 });
+        const turret = new THREE.Mesh(turretGeo, turretMat);
+        armGroup.add(turret);
+
+        // Shoulder Joint
+        const shoulder = new THREE.Group();
+        shoulder.position.y = 0.06;
+
+        const shoulderServo = new THREE.Mesh(new THREE.SphereGeometry(0.08, 16, 16), new THREE.MeshStandardMaterial({ color: 0x18a957, metalness: 0.6, roughness: 0.3 }));
+        shoulder.add(shoulderServo);
+
+        // Upper Arm Link
+        const upperArm = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.35, 0.06), new THREE.MeshStandardMaterial({ color: 0xf8fafc, metalness: 0.5, roughness: 0.2 }));
+        upperArm.position.y = 0.175;
+        shoulder.add(upperArm);
+
+        // Elbow Joint
+        const elbow = new THREE.Group();
+        elbow.position.y = 0.35;
+
+        const elbowServo = new THREE.Mesh(new THREE.SphereGeometry(0.07, 16, 16), new THREE.MeshStandardMaterial({ color: 0x00d2ff, metalness: 0.7, roughness: 0.2 }));
+        elbow.add(elbowServo);
+
+        // Forearm Link
+        const forearm = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.3, 0.05), new THREE.MeshStandardMaterial({ color: 0xf8fafc, metalness: 0.5, roughness: 0.2 }));
+        forearm.position.y = 0.15;
+        elbow.add(forearm);
+
+        // Wrist & Gripper Claws
+        const wrist = new THREE.Group();
+        wrist.position.y = 0.3;
+
+        const gripperBase = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.04, 0.06), new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.9, roughness: 0.2 }));
+        wrist.add(gripperBase);
+
+        const clawMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.9, roughness: 0.2 });
+        const clawLeft = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.09, 0.04), clawMat);
+        clawLeft.position.set(-0.04, 0.05, 0);
+        const clawRight = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.09, 0.04), clawMat);
+        clawRight.position.set(0.04, 0.05, 0);
+
+        wrist.add(clawLeft);
+        wrist.add(clawRight);
+        elbow.add(wrist);
+        shoulder.add(elbow);
+        armGroup.add(shoulder);
+
+        robotGroup.add(armGroup);
+
+        topRoboticArm = {
+          group: armGroup,
+          shoulder: shoulder,
+          elbow: elbow,
+          wrist: wrist,
+          clawL: clawLeft,
+          clawR: clawRight
+        };
+      }
+
+      /* --------------------------------------------------------------------------
+         INTERNAL MECHANISMS (Hopper, Conveyor, AI Gantry, 4 Chutes, 4 Bins)
+         -------------------------------------------------------------------------- */
+      function buildInternalComponents() {
+        // (A) Stainless Steel Intake Hopper
+        const hopperGeo = new THREE.BoxGeometry(1.0, 0.4, 0.5);
+        const steelMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.2 });
+        const hopper = new THREE.Mesh(hopperGeo, steelMat);
+        hopper.position.set(0, 1.1, -0.75);
+        hopper.rotation.x = Math.PI / 12;
+        internalGroup.add(hopper);
+
+        // (B) Motorized Internal Conveyor Belt
+        const conveyorGeo = new THREE.BoxGeometry(0.6, 0.08, 1.4);
+        const conveyorMat = new THREE.MeshStandardMaterial({ color: 0x1f2937, metalness: 0.7, roughness: 0.4 });
+        const conveyor = new THREE.Mesh(conveyorGeo, conveyorMat);
+        conveyor.position.set(0, 0.98, 0.1);
+        internalGroup.add(conveyor);
+
+        const beltGeo = new THREE.BoxGeometry(0.48, 0.02, 1.35);
+        const beltMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.8, metalness: 0.1 });
+        conveyorBelt = new THREE.Mesh(beltGeo, beltMat);
+        conveyorBelt.position.set(0, 1.03, 0.1);
+        internalGroup.add(conveyorBelt);
+
+        // (C) AI Vision Camera Gantry Arch
+        const gantryArch = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.05, 0.06), new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.8, roughness: 0.2 }));
+        gantryArch.position.set(0, 1.45, -0.35);
+        internalGroup.add(gantryArch);
+
+        [-0.36, 0.36].forEach(x => {
+          const strut = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.45, 0.04), new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.8, roughness: 0.2 }));
+          strut.position.set(x, 1.25, -0.35);
+          internalGroup.add(strut);
+        });
+
+        // AI Dual Optical Camera Housing
+        const aiCam = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.09, 0.12), new THREE.MeshStandardMaterial({ color: 0x0284c7, metalness: 0.8, roughness: 0.2 }));
+        aiCam.position.set(0, 1.4, -0.35);
+        internalGroup.add(aiCam);
+
+        // AI Volumetric Laser Projection Cone
+        const laserGeo = new THREE.ConeGeometry(0.28, 0.45, 24, 1, true);
+        const laserMat = new THREE.MeshBasicMaterial({
+          color: 0x00d2ff,
+          transparent: true,
+          opacity: 0.0,
+          side: THREE.DoubleSide
+        });
+        aiLaserMesh = new THREE.Mesh(laserGeo, laserMat);
+        aiLaserMesh.position.set(0, 1.18, -0.35);
+        aiLaserMesh.rotation.x = Math.PI;
+        internalGroup.add(aiLaserMesh);
+
+        // (D) 4 Gravity Chutes leading to 4 Sealed Compartments
+        const chuteZ = [-0.4, -0.1, 0.2, 0.5];
+        const compColors = [0xf59e0b, 0xef4444, 0xf8fafc, 0x3b82f6];
+
+        for (let i = 0; i < 4; i++) {
+          const isLeft = (i % 2 === 0);
+          const chuteGeo = new THREE.CylinderGeometry(0.1, 0.12, 0.42, 16, 1, true);
+          const chuteMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.8, roughness: 0.3, side: THREE.DoubleSide });
+          const chute = new THREE.Mesh(chuteGeo, chuteMat);
+          chute.position.set(isLeft ? -0.45 : 0.45, 0.82, chuteZ[i]);
+          chute.rotation.z = isLeft ? Math.PI / 5 : -Math.PI / 5;
+          internalGroup.add(chute);
+
+          // 4 Sealed Base Compartments
+          const tankGeo = new THREE.BoxGeometry(0.42, 0.35, 0.3);
+          const tankMat = new THREE.MeshStandardMaterial({
+            color: compColors[i],
+            metalness: 0.3,
+            roughness: 0.4,
+            transparent: true,
+            opacity: 0.8
+          });
+          const tank = new THREE.Mesh(tankGeo, tankMat);
+          tank.position.set(isLeft ? -0.48 : 0.48, 0.48, chuteZ[i]);
+          internalGroup.add(tank);
+
+          // UV-C Germicidal LED
+          const uvc = new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 12), new THREE.MeshBasicMaterial({ color: 0xa855f7 }));
+          uvc.position.set(isLeft ? -0.48 : 0.48, 0.62, chuteZ[i]);
+          internalGroup.add(uvc);
+
+          compTanks.push({ tank, uvc, color: compColors[i] });
+        }
+
+        // (E) Active Medical Waste Item (Pouch / Specimen)
+        const bagGeo = new THREE.BoxGeometry(0.12, 0.08, 0.14);
+        const bagMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.4, metalness: 0.1 });
+        wasteBagMesh = new THREE.Mesh(bagGeo, bagMat);
+        wasteBagMesh.position.set(0, 1.08, -0.75);
+        internalGroup.add(wasteBagMesh);
+      }
+
+      /* --------------------------------------------------------------------------
+         SET CAD CUTAWAY OPACITY
+         -------------------------------------------------------------------------- */
+      function setCutaway(fraction) {
+        currentCutawayFraction = fraction;
+        const opacity = Math.max(0.14, 1.0 - fraction * 0.86);
+        shellMaterials.forEach(m => {
+          m.opacity = opacity;
+          m.transparent = true;
+        });
+        wireframeShells.forEach(m => {
+          m.opacity = fraction * 0.7;
+        });
+      }
+
+      /* --------------------------------------------------------------------------
+         SET ACTIVE BREADCRUMB STEP
+         -------------------------------------------------------------------------- */
+      function setActiveStep(activeKey) {
+        Object.keys(steps).forEach(k => {
+          if (steps[k]) {
+            steps[k].classList.toggle('active', k === activeKey);
+          }
+        });
+      }
+
+      /* --------------------------------------------------------------------------
+         ANIMATION LOOP
+         -------------------------------------------------------------------------- */
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const delta = clock.getDelta();
+        animTime = (animTime + delta) % CYCLE_DURATION;
+
+        // Continuous Gentle Wheels Roll & Top LiDAR Spin
+        wheels.forEach(w => w.children[0].rotation.x += 0.03);
+        if (topLidarPuck) topLidarPuck.rotation.y += 0.05;
+
+        // ----------------------------------------------------------------------
+        // PHASE 1: 0.0s – 6.0s &bull; 360° TURNTABLE EXTERIOR SHOWCASE
+        // ----------------------------------------------------------------------
+        if (animTime < 6.0 && !isManualCutaway) {
+          const p = animTime / 6.0;
+
+          // Turntable smooth auto-rotation
+          if (!isUserInteracting) {
+            robotGroup.rotation.y += 0.012;
+          }
+
+          setCutaway(0.0);
+          aiLaserMesh.material.opacity = 0.0;
+          frontDoor.position.y = 1.18;
+          aiOverlay.classList.remove('visible');
+
+          // Robotic arm gentle calibration idle movement
+          topRoboticArm.shoulder.rotation.z = Math.sin(animTime * 1.5) * 0.15 + 0.2;
+          topRoboticArm.elbow.rotation.z = Math.cos(animTime * 1.5) * 0.2 - 0.4;
+          topRoboticArm.clawL.position.x = -0.04 - Math.sin(animTime * 2) * 0.01;
+          topRoboticArm.clawR.position.x = 0.04 + Math.sin(animTime * 2) * 0.01;
+
+          wasteBagMesh.position.set(0, 1.08, -0.75);
+
+          hudSmall.innerText = "ROBOT SHOWCASE";
+          hudTitle.innerText = "360° Turntable CAD View";
+          setActiveStep('hopper');
+        }
+
+        // ----------------------------------------------------------------------
+        // PHASE 2: 6.0s – 14.0s &bull; CAD CUTAWAY & INTERNAL WASTE SORTING FLOW
+        // ----------------------------------------------------------------------
+        else if ((animTime >= 6.0 && animTime < 14.0) || isManualCutaway) {
+          const cutawayP = isManualCutaway ? 1.0 : Math.min(1.0, (animTime - 6.0) * 1.5);
+          setCutaway(cutawayP);
+
+          // Settle robot rotation to clear side angle for viewing internal flow
+          if (!isUserInteracting && !isManualCutaway) {
+            robotGroup.rotation.y = THREE.MathUtils.lerp(robotGroup.rotation.y, 0.45, 0.05);
+          }
+
+          const flowTime = (animTime - 6.0) / 8.0; // 0 to 1 across 8 seconds
+
+          hudSmall.innerText = "INTERNAL CAD CUTAWAY";
+          hudTitle.innerText = "Automated Segregation Flow";
+
+          // Step 1: Intake & Conveyor (0% - 30%)
+          if (flowTime < 0.3) {
+            const f = flowTime / 0.3;
+            frontDoor.position.y = 1.18 + f * 0.25;
+            wasteBagMesh.position.set(0, 1.08, -0.75 + f * 0.4);
+            aiLaserMesh.material.opacity = 0.0;
+            aiOverlay.classList.remove('visible');
+            setActiveStep('conveyor');
+          }
+          // Step 2: AI Vision Camera Scanning (30% - 60%)
+          else if (flowTime < 0.6) {
+            const f = (flowTime - 0.3) / 0.3;
+            frontDoor.position.y = 1.18;
+            wasteBagMesh.position.set(0, 1.08, -0.35); // Under camera
+            aiLaserMesh.material.opacity = 0.4 + Math.sin(animTime * 15) * 0.25;
+            aiOverlay.classList.add('visible');
+            aiScanText.innerText = f < 0.5 ? "AI SCANNING..." : "IDENTIFIED: YELLOW INFECTIOUS";
+            setActiveStep('aiScan');
+
+            // Arm moves towards item
+            topRoboticArm.shoulder.rotation.z = 0.35;
+            topRoboticArm.elbow.rotation.z = -0.6;
+          }
+          // Step 3: Robotic Pick, Pivot to Chute & Drop (60% - 100%)
+          else {
+            const f = (flowTime - 0.6) / 0.4;
+            aiLaserMesh.material.opacity = 0.1;
+            aiScanText.innerText = "SORTED → GRAVITY CHUTE #1";
+
+            if (f < 0.5) {
+              // Lift & Swivel
+              const liftF = f / 0.5;
+              wasteBagMesh.position.set(-liftF * 0.3, 1.08 + liftF * 0.2, -0.35);
+              topRoboticArm.group.rotation.y = -liftF * 0.6;
+              setActiveStep('roboticArm');
+            } else {
+              // Slide down gravity chute into sealed bin
+              const dropF = (f - 0.5) / 0.5;
+              wasteBagMesh.position.set(-0.45, 1.28 - dropF * 0.8, -0.4);
+              setActiveStep('sealedBins');
+
+              // Pulse UV-C LED in bin 1
+              compTanks[0].uvc.scale.setScalar(1.0 + Math.sin(animTime * 10) * 0.4);
+            }
+          }
+        }
+
+        // ----------------------------------------------------------------------
+        // PHASE 3: 14.0s – 16.0s &bull; RESEAL & LOOP BACK
+        // ----------------------------------------------------------------------
+        else if (animTime >= 14.0 && !isManualCutaway) {
+          const resealP = (animTime - 14.0) / 2.0; // 0 to 1
+          setCutaway(Math.max(0, 1.0 - resealP * 1.5));
+          aiOverlay.classList.remove('visible');
+          aiLaserMesh.material.opacity = 0.0;
+          frontDoor.position.y = 1.18;
+          topRoboticArm.group.rotation.y = THREE.MathUtils.lerp(topRoboticArm.group.rotation.y, 0, 0.1);
+          setActiveStep('hopper');
+        }
+
+        controls.update();
+        renderer.render(scene, camera);
+      }
+
+      function onResize() {
+        if (!wrapper || !renderer || !camera) return;
+        const rect = wrapper.getBoundingClientRect();
+        camera.aspect = (rect.width || 400) / (rect.height || 490);
+        camera.updateProjectionMatrix();
+        renderer.setSize(rect.width || 400, rect.height || 490);
+      }
+
+      // Initialize on DOM load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+
+  <!-- 3D Interactive Problem Demonstration Engine -->
+  <script src="js/problem-3d.js"></script>
+
+  <!-- 3D Interactive Solution Demonstration Engine -->
+  <script src="js/solution-3d.js"></script>
+
+  <!-- 3D Interactive Workflow Simulator Engine -->
+  <script src="js/workflow-3d.js"></script>
+
+  <!-- 3D Interactive Unique Engineering Demonstrator Engine -->
+  <script src="js/unique-3d.js"></script>
+
+  <!-- 3D Interactive Engineering Design Explorer Engine -->
+  <script src="js/explorer-3d.js"></script>
+</body>
+</html>
